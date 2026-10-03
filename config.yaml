@@ -1,0 +1,54 @@
+# sportsdash configuration
+# Add or remove leagues/teams here; no code changes needed for any league ESPN
+# publishes a scoreboard for (find sport/league slugs in ESPN site URLs, e.g.
+# https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard).
+
+timezone: America/New_York
+refresh_seconds: 60        # auto-refresh for the Scores page
+schedule_days: 7           # default schedule window
+
+leagues:
+  - key: nfl
+    name: NFL
+    sport: football
+    league: nfl
+    standings_columns: [W, L, T, PCT, PF, PA, DIFF, DIV, STRK]
+
+  - key: ncaaf
+    name: NCAAF
+    sport: football
+    league: college-football
+    params: {groups: 80}          # 80 = all FBS games (default is Top 25 only)
+    standings_columns: [CONF, Total, PF, PA, STRK]
+
+  - key: ncaab
+    name: NCAAB
+    sport: basketball
+    league: mens-college-basketball
+    params: {groups: 50}          # 50 = all Division I
+    standings_columns: [CONF, Total, PCT, STRK]
+
+  - key: epl
+    name: EPL
+    sport: soccer
+    league: eng.1
+    standings_columns: [GP, W, D, L, F, A, GD, P]
+
+  - key: pga
+    name: PGA Tour
+    sport: golf
+    league: pga
+    kind: golf
+
+teams:
+  - name: Virginia Cavaliers
+    short: UVA
+    espn_id: "258"
+    leagues: [ncaaf, ncaab]
+    color: "#E57200"
+
+  - name: Dallas Cowboys
+    short: DAL
+    espn_id: "6"
+    leagues: [nfl]
+    color: "#3D7DD8"

@@ -1,0 +1,285 @@
+{
+ "leagues": [
+  {
+   "abbreviation": "PGA",
+   "calendar": [
+    {
+     "id": "401703509",
+     "label": "Procore Championship",
+     "startDate": "2026-09-17T04:00Z",
+     "endDate": "2026-09-20T04:00Z"
+    },
+    {
+     "id": "401703510",
+     "label": "Sanderson Farms Championship",
+     "startDate": "2026-10-01T04:00Z",
+     "endDate": "2026-10-04T04:00Z"
+    },
+    {
+     "id": "401703511",
+     "label": "Baycurrent Classic",
+     "startDate": "2026-10-08T04:00Z",
+     "endDate": "2026-10-11T04:00Z"
+    },
+    {
+     "id": "401703512",
+     "label": "Black Desert Championship",
+     "startDate": "2026-10-22T04:00Z",
+     "endDate": "2026-10-25T04:00Z"
+    }
+   ]
+  }
+ ],
+ "events": [
+  {
+   "id": "401703510",
+   "name": "Sanderson Farms Championship",
+   "date": "2026-10-01T04:00Z",
+   "endDate": "2026-10-04T04:00Z",
+   "displayPurse": "$7,600,000",
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 2,
+    "type": {
+     "state": "in",
+     "name": "STATUS_IN_PROGRESS",
+     "shortDetail": "Round 2 - In Progress",
+     "detail": "Round 2 - In Progress",
+     "completed": false
+    }
+   },
+   "competitions": [
+    {
+     "id": "401703510",
+     "venue": {
+      "id": "1",
+      "fullName": "Country Club of Jackson",
+      "address": {
+       "city": "Jackson",
+       "state": "MS"
+      }
+     },
+     "competitors": [
+      {
+       "id": "1001",
+       "order": 1,
+       "score": "-11",
+       "athlete": {
+        "displayName": "Ben Griffin",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "1"
+        },
+        "thru": "14"
+       },
+       "linescores": [
+        {
+         "value": 65.0,
+         "displayValue": "65"
+        },
+        {
+         "value": 0,
+         "displayValue": "-4"
+        }
+       ]
+      },
+      {
+       "id": "1002",
+       "order": 2,
+       "score": "-9",
+       "athlete": {
+        "displayName": "Taylor Pendrith",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T2"
+        },
+        "thru": "F"
+       },
+       "linescores": [
+        {
+         "value": 66.0,
+         "displayValue": "66"
+        },
+        {
+         "value": 0,
+         "displayValue": "-3"
+        }
+       ]
+      },
+      {
+       "id": "1003",
+       "order": 3,
+       "score": "-9",
+       "athlete": {
+        "displayName": "Ryan Gerard",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T2"
+        },
+        "thru": "16"
+       },
+       "linescores": [
+        {
+         "value": 68.0,
+         "displayValue": "68"
+        },
+        {
+         "value": 0,
+         "displayValue": "-5"
+        }
+       ]
+      },
+      {
+       "id": "1004",
+       "order": 4,
+       "score": "-8",
+       "athlete": {
+        "displayName": "Kevin Yu",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "4"
+        },
+        "thru": "12"
+       },
+       "linescores": [
+        {
+         "value": 67.0,
+         "displayValue": "67"
+        },
+        {
+         "value": 0,
+         "displayValue": "-3"
+        }
+       ]
+      },
+      {
+       "id": "1005",
+       "order": 5,
+       "score": "-7",
+       "athlete": {
+        "displayName": "Davis Thompson",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T5"
+        },
+        "thru": "F"
+       },
+       "linescores": [
+        {
+         "value": 69.0,
+         "displayValue": "69"
+        },
+        {
+         "value": 0,
+         "displayValue": "-4"
+        }
+       ]
+      },
+      {
+       "id": "1006",
+       "order": 6,
+       "score": "-7",
+       "athlete": {
+        "displayName": "Mackenzie Hughes",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T5"
+        },
+        "thru": "10"
+       },
+       "linescores": [
+        {
+         "value": 66.0,
+         "displayValue": "66"
+        },
+        {
+         "value": 0,
+         "displayValue": "-1"
+        }
+       ]
+      },
+      {
+       "id": "1007",
+       "order": 7,
+       "score": "-6",
+       "athlete": {
+        "displayName": "J.T. Poston",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T7"
+        },
+        "thru": "F"
+       },
+       "linescores": [
+        {
+         "value": 70.0,
+         "displayValue": "70"
+        },
+        {
+         "value": 0,
+         "displayValue": "-4"
+        }
+       ]
+      },
+      {
+       "id": "1008",
+       "order": 8,
+       "score": "-6",
+       "athlete": {
+        "displayName": "Max Greyserman",
+        "flag": {
+         "href": ""
+        }
+       },
+       "status": {
+        "position": {
+         "displayName": "T7"
+        },
+        "thru": "15"
+       },
+       "linescores": [
+        {
+         "value": 68.0,
+         "displayValue": "68"
+        },
+        {
+         "value": 0,
+         "displayValue": "-2"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

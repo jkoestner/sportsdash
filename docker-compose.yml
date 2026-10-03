@@ -1,0 +1,14 @@
+# Standalone compose file. To add it to your existing `docker` project instead,
+# copy the `sportsdash` service block into that compose file and fix `build:`.
+services:
+  sportsdash:
+    image: sportsdash
+    container_name: sportsdash
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+    volumes:
+      # Edit leagues/teams without rebuilding; restart the container to apply.
+      - ./config.yaml:/app/config.yaml:ro
+    networks:
+      - t2_proxy

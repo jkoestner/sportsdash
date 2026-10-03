@@ -1,0 +1,347 @@
+{
+ "children": [
+  {
+   "name": "English Premier League",
+   "standings": {
+    "entries": [
+     {
+      "team": {
+       "id": "359",
+       "displayName": "Arsenal",
+       "shortDisplayName": "Arsenal",
+       "abbreviation": "ARS",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "5"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "0"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "1"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "14"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "4"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+10"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "15"
+       }
+      ]
+     },
+     {
+      "team": {
+       "id": "382",
+       "displayName": "Manchester City",
+       "shortDisplayName": "Man City",
+       "abbreviation": "MCI",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "4"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "2"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "0"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "13"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "5"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+8"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "14"
+       }
+      ]
+     },
+     {
+      "team": {
+       "id": "364",
+       "displayName": "Liverpool",
+       "shortDisplayName": "Liverpool",
+       "abbreviation": "LIV",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "4"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "1"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "1"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "12"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "6"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+6"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "13"
+       }
+      ]
+     },
+     {
+      "team": {
+       "id": "361",
+       "displayName": "Newcastle United",
+       "shortDisplayName": "Newcastle",
+       "abbreviation": "NEW",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "4"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "1"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "1"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "10"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "6"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+4"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "13"
+       }
+      ]
+     },
+     {
+      "team": {
+       "id": "363",
+       "displayName": "Chelsea",
+       "shortDisplayName": "Chelsea",
+       "abbreviation": "CHE",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "3"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "1"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "2"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "9"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "8"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+1"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "10"
+       }
+      ]
+     },
+     {
+      "team": {
+       "id": "367",
+       "displayName": "Tottenham Hotspur",
+       "shortDisplayName": "Spurs",
+       "abbreviation": "TOT",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png"
+        }
+       ]
+      },
+      "stats": [
+       {
+        "name": "gp",
+        "abbreviation": "GP",
+        "displayValue": "6"
+       },
+       {
+        "name": "w",
+        "abbreviation": "W",
+        "displayValue": "2"
+       },
+       {
+        "name": "d",
+        "abbreviation": "D",
+        "displayValue": "2"
+       },
+       {
+        "name": "l",
+        "abbreviation": "L",
+        "displayValue": "2"
+       },
+       {
+        "name": "f",
+        "abbreviation": "F",
+        "displayValue": "8"
+       },
+       {
+        "name": "a",
+        "abbreviation": "A",
+        "displayValue": "8"
+       },
+       {
+        "name": "gd",
+        "abbreviation": "GD",
+        "displayValue": "+0"
+       },
+       {
+        "name": "p",
+        "abbreviation": "P",
+        "displayValue": "8"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

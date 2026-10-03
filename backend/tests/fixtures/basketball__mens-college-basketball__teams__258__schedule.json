@@ -1,0 +1,161 @@
+{
+ "team": {
+  "id": "258",
+  "displayName": "Virginia Cavaliers",
+  "shortDisplayName": "Virginia",
+  "abbreviation": "UVA",
+  "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+ },
+ "events": [
+  {
+   "id": "401820001",
+   "date": "2026-11-03T23:00Z",
+   "name": "Coastal Carolina Chanticleers at Virginia Cavaliers",
+   "shortName": "COAST @ UVA",
+   "competitions": [
+    {
+     "id": "401820001",
+     "date": "2026-11-03T23:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "John Paul Jones Arena",
+      "address": {
+       "city": "Charlottesville",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "324",
+        "displayName": "Coastal Carolina Chanticleers",
+        "shortDisplayName": "Coastal Carolina",
+        "abbreviation": "CCU",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/324.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Tue, Nov 3",
+       "detail": "Tue, Nov 3",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ACCNX"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Tue, Nov 3",
+     "detail": "Tue, Nov 3",
+     "completed": false
+    }
+   }
+  },
+  {
+   "id": "401820010",
+   "date": "2026-11-10T00:00Z",
+   "name": "Duke Blue Devils at Virginia Cavaliers",
+   "shortName": "DUKE @ UVA",
+   "competitions": [
+    {
+     "id": "401820010",
+     "date": "2026-11-10T00:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "John Paul Jones Arena",
+      "address": {
+       "city": "Charlottesville",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "150",
+        "displayName": "Duke Blue Devils",
+        "shortDisplayName": "Duke",
+        "abbreviation": "DUKE",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Mon, Nov 9",
+       "detail": "Mon, Nov 9",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Mon, Nov 9",
+     "detail": "Mon, Nov 9",
+     "completed": false
+    }
+   }
+  }
+ ]
+}

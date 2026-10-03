@@ -1,0 +1,469 @@
+{
+ "children": [
+  {
+   "name": "National Football Conference",
+   "children": [
+    {
+     "name": "NFC East",
+     "standings": {
+      "entries": [
+       {
+        "team": {
+         "id": "21",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles",
+         "abbreviation": "PHI",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "3"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".750"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "101"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "74"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "+27"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "1-0"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "L1"
+         }
+        ]
+       },
+       {
+        "team": {
+         "id": "6",
+         "displayName": "Dallas Cowboys",
+         "shortDisplayName": "Cowboys",
+         "abbreviation": "DAL",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "3"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".750"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "109"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "88"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "+21"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "1-0"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "W2"
+         }
+        ]
+       },
+       {
+        "team": {
+         "id": "28",
+         "displayName": "Washington Commanders",
+         "shortDisplayName": "Commanders",
+         "abbreviation": "WSH",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "2"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "2"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".500"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "80"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "82"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "-2"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "0-1"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "W1"
+         }
+        ]
+       },
+       {
+        "team": {
+         "id": "19",
+         "displayName": "New York Giants",
+         "shortDisplayName": "Giants",
+         "abbreviation": "NYG",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "1"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "3"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".250"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "61"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "99"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "-38"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "0-1"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "L2"
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "NFC North",
+     "standings": {
+      "entries": [
+       {
+        "team": {
+         "id": "9",
+         "displayName": "Green Bay Packers",
+         "shortDisplayName": "Packers",
+         "abbreviation": "GB",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "2"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "2"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".500"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "90"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "85"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "+5"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "1-1"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "L1"
+         }
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "name": "American Football Conference",
+   "children": [
+    {
+     "name": "AFC East",
+     "standings": {
+      "entries": [
+       {
+        "team": {
+         "id": "2",
+         "displayName": "Buffalo Bills",
+         "shortDisplayName": "Bills",
+         "abbreviation": "BUF",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "4"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": "1.000"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "120"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "70"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "+50"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "1-0"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "W4"
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "name": "AFC West",
+     "standings": {
+      "entries": [
+       {
+        "team": {
+         "id": "12",
+         "displayName": "Kansas City Chiefs",
+         "shortDisplayName": "Chiefs",
+         "abbreviation": "KC",
+         "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+         "logos": [
+          {
+           "href": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png"
+          }
+         ]
+        },
+        "stats": [
+         {
+          "name": "w",
+          "abbreviation": "W",
+          "displayValue": "3"
+         },
+         {
+          "name": "l",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "t",
+          "abbreviation": "T",
+          "displayValue": "0"
+         },
+         {
+          "name": "pct",
+          "abbreviation": "PCT",
+          "displayValue": ".750"
+         },
+         {
+          "name": "pf",
+          "abbreviation": "PF",
+          "displayValue": "98"
+         },
+         {
+          "name": "pa",
+          "abbreviation": "PA",
+          "displayValue": "80"
+         },
+         {
+          "name": "diff",
+          "abbreviation": "DIFF",
+          "displayValue": "+18"
+         },
+         {
+          "name": "div",
+          "abbreviation": "DIV",
+          "displayValue": "1-0"
+         },
+         {
+          "name": "strk",
+          "abbreviation": "STRK",
+          "displayValue": "W1"
+         }
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

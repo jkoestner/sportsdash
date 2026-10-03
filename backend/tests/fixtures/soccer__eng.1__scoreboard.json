@@ -1,0 +1,335 @@
+{
+ "leagues": [
+  {
+   "abbreviation": "EPL"
+  }
+ ],
+ "events": [
+  {
+   "id": "740901",
+   "date": "2026-10-02T19:00Z",
+   "name": "Chelsea at Newcastle United",
+   "shortName": "CHE @ NEW",
+   "competitions": [
+    {
+     "id": "740901",
+     "date": "2026-10-02T19:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "St James' Park",
+      "address": {
+       "city": "Newcastle-upon-Tyne",
+       "country": "England"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "361",
+        "displayName": "Newcastle United",
+        "shortDisplayName": "Newcastle",
+        "abbreviation": "NEW",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png"
+       },
+       "score": "1",
+       "records": [
+        {
+         "type": "total",
+         "summary": "4-1-1"
+        }
+       ]
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "363",
+        "displayName": "Chelsea",
+        "shortDisplayName": "Chelsea",
+        "abbreviation": "CHE",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png"
+       },
+       "score": "1",
+       "records": [
+        {
+         "type": "total",
+         "summary": "3-2-1"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "67'",
+      "period": 2,
+      "type": {
+       "state": "in",
+       "name": "STATUS_SECOND_HALF",
+       "shortDetail": "67'",
+       "detail": "67'",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "Peacock"
+       ]
+      }
+     ],
+     "odds": [
+      {
+       "provider": {
+        "id": "58",
+        "name": "DraftKings"
+       },
+       "details": "NEW +130",
+       "overUnder": 2.5,
+       "spread": null,
+       "homeTeamOdds": {
+        "moneyLine": 130
+       },
+       "awayTeamOdds": {
+        "moneyLine": 210
+       },
+       "drawOdds": {
+        "moneyLine": 240
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "67'",
+    "period": 2,
+    "type": {
+     "state": "in",
+     "name": "STATUS_SECOND_HALF",
+     "shortDetail": "67'",
+     "detail": "67'",
+     "completed": false
+    }
+   }
+  },
+  {
+   "id": "740905",
+   "date": "2026-10-03T11:30Z",
+   "name": "Liverpool at Arsenal",
+   "shortName": "LIV @ ARS",
+   "competitions": [
+    {
+     "id": "740905",
+     "date": "2026-10-03T11:30Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Emirates Stadium",
+      "address": {
+       "city": "London",
+       "country": "England"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "359",
+        "displayName": "Arsenal",
+        "shortDisplayName": "Arsenal",
+        "abbreviation": "ARS",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/359.png"
+       },
+       "records": [
+        {
+         "type": "total",
+         "summary": "5-1-0"
+        }
+       ]
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "364",
+        "displayName": "Liverpool",
+        "shortDisplayName": "Liverpool",
+        "abbreviation": "LIV",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/364.png"
+       },
+       "records": [
+        {
+         "type": "total",
+         "summary": "4-1-1"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sat, October 3rd at 7:30 AM EDT",
+       "detail": "Sat, October 3rd at 7:30 AM EDT",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "NBC"
+       ]
+      }
+     ],
+     "odds": [
+      {
+       "provider": {
+        "id": "58",
+        "name": "DraftKings"
+       },
+       "details": "ARS -120",
+       "overUnder": 2.5,
+       "spread": null,
+       "homeTeamOdds": {
+        "moneyLine": -120
+       },
+       "awayTeamOdds": {
+        "moneyLine": 310
+       },
+       "drawOdds": {
+        "moneyLine": 280
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sat, October 3rd at 7:30 AM EDT",
+     "detail": "Sat, October 3rd at 7:30 AM EDT",
+     "completed": false
+    }
+   }
+  },
+  {
+   "id": "740908",
+   "date": "2026-10-04T15:30Z",
+   "name": "Manchester City at Tottenham Hotspur",
+   "shortName": "MCI @ TOT",
+   "competitions": [
+    {
+     "id": "740908",
+     "date": "2026-10-04T15:30Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Tottenham Hotspur Stadium",
+      "address": {
+       "city": "London",
+       "country": "England"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "367",
+        "displayName": "Tottenham Hotspur",
+        "shortDisplayName": "Spurs",
+        "abbreviation": "TOT",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/367.png"
+       },
+       "records": [
+        {
+         "type": "total",
+         "summary": "2-2-2"
+        }
+       ]
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "382",
+        "displayName": "Manchester City",
+        "shortDisplayName": "Man City",
+        "abbreviation": "MCI",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/382.png"
+       },
+       "records": [
+        {
+         "type": "total",
+         "summary": "4-0-2"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sun, October 4th at 11:30 AM EDT",
+       "detail": "Sun, October 4th at 11:30 AM EDT",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "USA Net"
+       ]
+      }
+     ],
+     "odds": [
+      {
+       "provider": {
+        "id": "58",
+        "name": "DraftKings"
+       },
+       "details": "MCI -145",
+       "overUnder": 3.5,
+       "spread": null,
+       "homeTeamOdds": {
+        "moneyLine": 340
+       },
+       "awayTeamOdds": {
+        "moneyLine": -145
+       },
+       "drawOdds": {
+        "moneyLine": 300
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sun, October 4th at 11:30 AM EDT",
+     "detail": "Sun, October 4th at 11:30 AM EDT",
+     "completed": false
+    }
+   }
+  }
+ ]
+}

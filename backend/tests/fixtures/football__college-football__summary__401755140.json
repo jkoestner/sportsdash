@@ -1,0 +1,129 @@
+{
+ "header": {
+  "id": "401755140",
+  "competitions": [
+   {
+    "id": "401755140",
+    "date": "2026-10-03T19:30Z",
+    "timeValid": true,
+    "neutralSite": false,
+    "competitors": [
+     {
+      "homeAway": "home",
+      "team": {
+       "id": "258",
+       "displayName": "Virginia Cavaliers",
+       "shortDisplayName": "Virginia",
+       "abbreviation": "UVA",
+       "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+      },
+      "records": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ]
+     },
+     {
+      "homeAway": "away",
+      "team": {
+       "id": "153",
+       "displayName": "North Carolina Tar Heels",
+       "shortDisplayName": "North Carolina",
+       "abbreviation": "UNC",
+       "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/153.png"
+      },
+      "records": [
+       {
+        "type": "total",
+        "summary": "2-2"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "2-2"
+       }
+      ]
+     }
+    ],
+    "status": {
+     "clock": 0,
+     "displayClock": "0:00",
+     "period": 0,
+     "type": {
+      "state": "pre",
+      "name": "STATUS_SCHEDULED",
+      "shortDetail": "Sat, October 3rd at 3:30 PM EDT",
+      "detail": "Sat, October 3rd at 3:30 PM EDT",
+      "completed": false
+     }
+    },
+    "broadcasts": [
+     {
+      "market": "national",
+      "names": [
+       "ACCN"
+      ]
+     }
+    ],
+    "odds": [
+     {
+      "provider": {
+       "id": "58",
+       "name": "ESPN BET"
+      },
+      "details": "UVA -3",
+      "overUnder": 52.5,
+      "spread": -3.0,
+      "homeTeamOdds": {
+       "moneyLine": -155
+      },
+      "awayTeamOdds": {
+       "moneyLine": 130
+      }
+     }
+    ],
+    "notes": [
+     {
+      "type": "event",
+      "headline": "South's Oldest Rivalry"
+     }
+    ]
+   }
+  ]
+ },
+ "gameInfo": {
+  "venue": {
+   "id": "1",
+   "fullName": "Scott Stadium",
+   "address": {
+    "city": "Charlottesville",
+    "state": "VA"
+   }
+  }
+ },
+ "pickcenter": [
+  {
+   "provider": {
+    "id": "58",
+    "name": "ESPN BET"
+   },
+   "details": "UVA -3",
+   "overUnder": 52.5,
+   "spread": -3.0,
+   "homeTeamOdds": {
+    "moneyLine": -155
+   },
+   "awayTeamOdds": {
+    "moneyLine": 130
+   }
+  }
+ ]
+}

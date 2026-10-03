@@ -1,0 +1,485 @@
+{
+ "team": {
+  "id": "258",
+  "displayName": "Virginia Cavaliers",
+  "shortDisplayName": "Virginia",
+  "abbreviation": "UVA",
+  "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+ },
+ "events": [
+  {
+   "id": "401755110",
+   "date": "2026-09-05T23:00Z",
+   "name": "Coastal Carolina Chanticleers at Virginia Cavaliers",
+   "shortName": "COAST @ UVA",
+   "competitions": [
+    {
+     "id": "401755110",
+     "date": "2026-09-05T23:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Scott Stadium",
+      "address": {
+       "city": "Charlottesville",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       },
+       "score": {
+        "value": 41.0,
+        "displayValue": "41"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "324",
+        "displayName": "Coastal Carolina Chanticleers",
+        "shortDisplayName": "Coastal Carolina",
+        "abbreviation": "CCU",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/324.png"
+       },
+       "score": {
+        "value": 13.0,
+        "displayValue": "13"
+       },
+       "winner": false
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "post",
+       "name": "STATUS_FINAL",
+       "shortDetail": "Final",
+       "detail": "Final",
+       "completed": true
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ACCN"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "post",
+     "name": "STATUS_FINAL",
+     "shortDetail": "Final",
+     "detail": "Final",
+     "completed": true
+    }
+   }
+  },
+  {
+   "id": "401755120",
+   "date": "2026-09-12T16:00Z",
+   "name": "Virginia Cavaliers at Clemson Tigers",
+   "shortName": "UVA @ CLEM",
+   "competitions": [
+    {
+     "id": "401755120",
+     "date": "2026-09-12T16:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Memorial Stadium",
+      "address": {
+       "city": "Clemson",
+       "state": "SC"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "228",
+        "displayName": "Clemson Tigers",
+        "shortDisplayName": "Clemson",
+        "abbreviation": "CLEM",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png"
+       },
+       "score": {
+        "value": 28.0,
+        "displayValue": "28"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       },
+       "score": {
+        "value": 24.0,
+        "displayValue": "24"
+       },
+       "winner": false
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "post",
+       "name": "STATUS_FINAL",
+       "shortDetail": "Final",
+       "detail": "Final",
+       "completed": true
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "post",
+     "name": "STATUS_FINAL",
+     "shortDetail": "Final",
+     "detail": "Final",
+     "completed": true
+    }
+   }
+  },
+  {
+   "id": "401755130",
+   "date": "2026-09-26T20:00Z",
+   "name": "Duke Blue Devils at Virginia Cavaliers",
+   "shortName": "DUKE @ UVA",
+   "competitions": [
+    {
+     "id": "401755130",
+     "date": "2026-09-26T20:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Scott Stadium",
+      "address": {
+       "city": "Charlottesville",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       },
+       "score": {
+        "value": 34.0,
+        "displayValue": "34"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "150",
+        "displayName": "Duke Blue Devils",
+        "shortDisplayName": "Duke",
+        "abbreviation": "DUKE",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png"
+       },
+       "score": {
+        "value": 20.0,
+        "displayValue": "20"
+       },
+       "winner": false
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "post",
+       "name": "STATUS_FINAL",
+       "shortDetail": "Final",
+       "detail": "Final",
+       "completed": true
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ACCN"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "post",
+     "name": "STATUS_FINAL",
+     "shortDetail": "Final",
+     "detail": "Final",
+     "completed": true
+    }
+   }
+  },
+  {
+   "id": "401755140",
+   "date": "2026-10-03T19:30Z",
+   "name": "North Carolina Tar Heels at Virginia Cavaliers",
+   "shortName": "UNC @ UVA",
+   "competitions": [
+    {
+     "id": "401755140",
+     "date": "2026-10-03T19:30Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Scott Stadium",
+      "address": {
+       "city": "Charlottesville",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "153",
+        "displayName": "North Carolina Tar Heels",
+        "shortDisplayName": "North Carolina",
+        "abbreviation": "UNC",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/153.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sat, Oct 3",
+       "detail": "Sat, Oct 3",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ACCN"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sat, Oct 3",
+     "detail": "Sat, Oct 3",
+     "completed": false
+    }
+   }
+  },
+  {
+   "id": "401755160",
+   "date": "2026-10-17T16:00Z",
+   "name": "Virginia Cavaliers at Louisville Cardinals",
+   "shortName": "UVA @ LOU",
+   "competitions": [
+    {
+     "id": "401755160",
+     "date": "2026-10-17T16:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "L&N Federal Credit Union Stadium",
+      "address": {
+       "city": "Louisville",
+       "state": "KY"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "97",
+        "displayName": "Louisville Cardinals",
+        "shortDisplayName": "Louisville",
+        "abbreviation": "LOU",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/97.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sat, Oct 17",
+       "detail": "Sat, Oct 17",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ESPN2"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sat, Oct 17",
+     "detail": "Sat, Oct 17",
+     "completed": false
+    }
+   }
+  },
+  {
+   "id": "401755190",
+   "date": "2026-11-28T17:00Z",
+   "name": "Virginia Cavaliers at Virginia Tech Hokies",
+   "shortName": "UVA @ VT",
+   "competitions": [
+    {
+     "id": "401755190",
+     "date": "2026-11-28T17:00Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Lane Stadium",
+      "address": {
+       "city": "Blacksburg",
+       "state": "VA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "259",
+        "displayName": "Virginia Tech Hokies",
+        "shortDisplayName": "Virginia Tech",
+        "abbreviation": "VT",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/259.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "258",
+        "displayName": "Virginia Cavaliers",
+        "shortDisplayName": "Virginia",
+        "abbreviation": "UVA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sat, Nov 28",
+       "detail": "Sat, Nov 28",
+       "completed": false
+      }
+     },
+     "broadcasts": []
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sat, Nov 28",
+     "detail": "Sat, Nov 28",
+     "completed": false
+    }
+   }
+  }
+ ]
+}

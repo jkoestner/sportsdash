@@ -1,0 +1,260 @@
+{
+ "header": {
+  "id": "740901",
+  "competitions": [
+   {
+    "id": "740901",
+    "date": "2026-10-02T19:00Z",
+    "timeValid": true,
+    "neutralSite": false,
+    "competitors": [
+     {
+      "homeAway": "home",
+      "team": {
+       "id": "361",
+       "displayName": "Newcastle United",
+       "shortDisplayName": "Newcastle",
+       "abbreviation": "NEW",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png"
+      },
+      "score": "1",
+      "records": [
+       {
+        "type": "total",
+        "summary": "4-1-1"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "4-1-1"
+       }
+      ]
+     },
+     {
+      "homeAway": "away",
+      "team": {
+       "id": "363",
+       "displayName": "Chelsea",
+       "shortDisplayName": "Chelsea",
+       "abbreviation": "CHE",
+       "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png"
+      },
+      "score": "1",
+      "records": [
+       {
+        "type": "total",
+        "summary": "3-2-1"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "3-2-1"
+       }
+      ]
+     }
+    ],
+    "status": {
+     "clock": 0,
+     "displayClock": "67'",
+     "period": 2,
+     "type": {
+      "state": "in",
+      "name": "STATUS_SECOND_HALF",
+      "shortDetail": "67'",
+      "detail": "67'",
+      "completed": false
+     }
+    },
+    "broadcasts": [
+     {
+      "market": "national",
+      "names": [
+       "Peacock"
+      ]
+     }
+    ],
+    "odds": [
+     {
+      "provider": {
+       "id": "58",
+       "name": "DraftKings"
+      },
+      "details": "NEW +130",
+      "overUnder": 2.5,
+      "spread": null,
+      "homeTeamOdds": {
+       "moneyLine": 130
+      },
+      "awayTeamOdds": {
+       "moneyLine": 210
+      },
+      "drawOdds": {
+       "moneyLine": 240
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "gameInfo": {
+  "venue": {
+   "id": "1",
+   "fullName": "St James' Park",
+   "address": {
+    "city": "Newcastle-upon-Tyne",
+    "country": "England"
+   }
+  },
+  "attendance": 52123
+ },
+ "pickcenter": [
+  {
+   "provider": {
+    "id": "58",
+    "name": "DraftKings"
+   },
+   "details": "NEW +130",
+   "overUnder": 2.5,
+   "spread": null,
+   "homeTeamOdds": {
+    "moneyLine": 130
+   },
+   "awayTeamOdds": {
+    "moneyLine": 210
+   },
+   "drawOdds": {
+    "moneyLine": 240
+   }
+  }
+ ],
+ "boxscore": {
+  "teams": [
+   {
+    "team": {
+     "id": "363",
+     "displayName": "Chelsea",
+     "shortDisplayName": "Chelsea",
+     "abbreviation": "CHE",
+     "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/363.png"
+    },
+    "statistics": [
+     {
+      "name": "Possession",
+      "label": "Possession",
+      "displayValue": "48.2"
+     },
+     {
+      "name": "Shots",
+      "label": "Shots",
+      "displayValue": "9"
+     },
+     {
+      "name": "Shots on Goal",
+      "label": "Shots on Goal",
+      "displayValue": "3"
+     },
+     {
+      "name": "Corner Kicks",
+      "label": "Corner Kicks",
+      "displayValue": "4"
+     },
+     {
+      "name": "Fouls",
+      "label": "Fouls",
+      "displayValue": "11"
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "361",
+     "displayName": "Newcastle United",
+     "shortDisplayName": "Newcastle",
+     "abbreviation": "NEW",
+     "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/361.png"
+    },
+    "statistics": [
+     {
+      "name": "Possession",
+      "label": "Possession",
+      "displayValue": "51.8"
+     },
+     {
+      "name": "Shots",
+      "label": "Shots",
+      "displayValue": "12"
+     },
+     {
+      "name": "Shots on Goal",
+      "label": "Shots on Goal",
+      "displayValue": "5"
+     },
+     {
+      "name": "Corner Kicks",
+      "label": "Corner Kicks",
+      "displayValue": "6"
+     },
+     {
+      "name": "Fouls",
+      "label": "Fouls",
+      "displayValue": "9"
+     }
+    ]
+   }
+  ]
+ },
+ "keyEvents": [
+  {
+   "type": {
+    "text": "Goal"
+   },
+   "scoringPlay": true,
+   "clock": {
+    "displayValue": "23'"
+   },
+   "team": {
+    "displayName": "Newcastle United"
+   },
+   "text": "Goal! Alexander Isak (Newcastle) right footed shot."
+  },
+  {
+   "type": {
+    "text": "Yellow Card"
+   },
+   "clock": {
+    "displayValue": "38'"
+   },
+   "team": {
+    "displayName": "Chelsea"
+   },
+   "text": "Mois\u00e9s Caicedo (Chelsea) is shown the yellow card."
+  },
+  {
+   "type": {
+    "text": "Goal"
+   },
+   "scoringPlay": true,
+   "clock": {
+    "displayValue": "55'"
+   },
+   "team": {
+    "displayName": "Chelsea"
+   },
+   "text": "Goal! Cole Palmer (Chelsea) left footed shot from outside the box."
+  },
+  {
+   "type": {
+    "text": "Substitution"
+   },
+   "clock": {
+    "displayValue": "60'"
+   },
+   "team": {
+    "displayName": "Chelsea"
+   },
+   "text": "Substitution, Chelsea."
+  }
+ ]
+}

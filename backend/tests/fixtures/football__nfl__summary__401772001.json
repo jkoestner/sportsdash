@@ -1,0 +1,584 @@
+{
+ "header": {
+  "id": "401772001",
+  "competitions": [
+   {
+    "id": "401772001",
+    "date": "2026-09-27T20:25Z",
+    "timeValid": true,
+    "neutralSite": false,
+    "competitors": [
+     {
+      "homeAway": "home",
+      "team": {
+       "id": "21",
+       "displayName": "Philadelphia Eagles",
+       "shortDisplayName": "Eagles",
+       "abbreviation": "PHI",
+       "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+      },
+      "score": "20",
+      "records": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ],
+      "winner": false,
+      "linescores": [
+       {
+        "value": 7.0,
+        "displayValue": "7"
+       },
+       {
+        "value": 3.0,
+        "displayValue": "3"
+       },
+       {
+        "value": 7.0,
+        "displayValue": "7"
+       },
+       {
+        "value": 3.0,
+        "displayValue": "3"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ]
+     },
+     {
+      "homeAway": "away",
+      "team": {
+       "id": "6",
+       "displayName": "Dallas Cowboys",
+       "shortDisplayName": "Cowboys",
+       "abbreviation": "DAL",
+       "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+      },
+      "score": "27",
+      "records": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ],
+      "winner": true,
+      "linescores": [
+       {
+        "value": 3.0,
+        "displayValue": "3"
+       },
+       {
+        "value": 14.0,
+        "displayValue": "14"
+       },
+       {
+        "value": 0.0,
+        "displayValue": "0"
+       },
+       {
+        "value": 10.0,
+        "displayValue": "10"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "3-1"
+       }
+      ]
+     }
+    ],
+    "status": {
+     "clock": 0,
+     "displayClock": "0:00",
+     "period": 4,
+     "type": {
+      "state": "post",
+      "name": "STATUS_FINAL",
+      "shortDetail": "Final",
+      "detail": "Final",
+      "completed": true
+     }
+    },
+    "broadcasts": [
+     {
+      "market": "national",
+      "names": [
+       "FOX"
+      ]
+     }
+    ],
+    "odds": [
+     {
+      "provider": {
+       "id": "58",
+       "name": "ESPN BET"
+      },
+      "details": "PHI -3.5",
+      "overUnder": 47.5,
+      "spread": -3.5,
+      "homeTeamOdds": {
+       "moneyLine": -180
+      },
+      "awayTeamOdds": {
+       "moneyLine": 150
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "gameInfo": {
+  "venue": {
+   "id": "1",
+   "fullName": "Lincoln Financial Field",
+   "address": {
+    "city": "Philadelphia",
+    "state": "PA"
+   }
+  },
+  "attendance": 69879,
+  "weather": {
+   "temperature": 71,
+   "displayValue": "Partly sunny"
+  },
+  "officials": [
+   {
+    "displayName": "Shawn Hochuli"
+   }
+  ]
+ },
+ "pickcenter": [
+  {
+   "provider": {
+    "id": "58",
+    "name": "ESPN BET"
+   },
+   "details": "PHI -3.5",
+   "overUnder": 47.5,
+   "spread": -3.5,
+   "homeTeamOdds": {
+    "moneyLine": -180
+   },
+   "awayTeamOdds": {
+    "moneyLine": 150
+   }
+  }
+ ],
+ "boxscore": {
+  "teams": [
+   {
+    "team": {
+     "id": "6",
+     "displayName": "Dallas Cowboys",
+     "shortDisplayName": "Cowboys",
+     "abbreviation": "DAL",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+    },
+    "statistics": [
+     {
+      "name": "1st Downs",
+      "label": "1st Downs",
+      "displayValue": "22"
+     },
+     {
+      "name": "Total Yards",
+      "label": "Total Yards",
+      "displayValue": "384"
+     },
+     {
+      "name": "Passing",
+      "label": "Passing",
+      "displayValue": "268"
+     },
+     {
+      "name": "Rushing",
+      "label": "Rushing",
+      "displayValue": "116"
+     },
+     {
+      "name": "Turnovers",
+      "label": "Turnovers",
+      "displayValue": "0"
+     },
+     {
+      "name": "3rd down efficiency",
+      "label": "3rd down efficiency",
+      "displayValue": "6-12"
+     },
+     {
+      "name": "Possession",
+      "label": "Possession",
+      "displayValue": "32:14"
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "21",
+     "displayName": "Philadelphia Eagles",
+     "shortDisplayName": "Eagles",
+     "abbreviation": "PHI",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+    },
+    "statistics": [
+     {
+      "name": "1st Downs",
+      "label": "1st Downs",
+      "displayValue": "18"
+     },
+     {
+      "name": "Total Yards",
+      "label": "Total Yards",
+      "displayValue": "321"
+     },
+     {
+      "name": "Passing",
+      "label": "Passing",
+      "displayValue": "205"
+     },
+     {
+      "name": "Rushing",
+      "label": "Rushing",
+      "displayValue": "116"
+     },
+     {
+      "name": "Turnovers",
+      "label": "Turnovers",
+      "displayValue": "2"
+     },
+     {
+      "name": "3rd down efficiency",
+      "label": "3rd down efficiency",
+      "displayValue": "4-11"
+     },
+     {
+      "name": "Possession",
+      "label": "Possession",
+      "displayValue": "27:46"
+     }
+    ]
+   }
+  ],
+  "players": [
+   {
+    "team": {
+     "id": "6",
+     "displayName": "Dallas Cowboys",
+     "shortDisplayName": "Cowboys",
+     "abbreviation": "DAL",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "text": "Dallas Passing",
+      "labels": [
+       "C/ATT",
+       "YDS",
+       "TD",
+       "INT",
+       "QBR"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "displayName": "D. Prescott",
+         "shortName": "D. Prescott"
+        },
+        "stats": [
+         "24/33",
+         "281",
+         "2",
+         "0",
+         "78.4"
+        ]
+       }
+      ],
+      "totals": [
+       "24/33",
+       "281",
+       "2",
+       "0",
+       ""
+      ]
+     },
+     {
+      "name": "rushing",
+      "text": "Dallas Rushing",
+      "labels": [
+       "CAR",
+       "YDS",
+       "AVG",
+       "TD",
+       "LONG"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "displayName": "J. Williams",
+         "shortName": "J. Williams"
+        },
+        "stats": [
+         "18",
+         "88",
+         "4.9",
+         "1",
+         "22"
+        ]
+       },
+       {
+        "athlete": {
+         "displayName": "D. Prescott",
+         "shortName": "D. Prescott"
+        },
+        "stats": [
+         "3",
+         "12",
+         "4.0",
+         "0",
+         "9"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "text": "Dallas Receiving",
+      "labels": [
+       "REC",
+       "YDS",
+       "AVG",
+       "TD",
+       "LONG"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "displayName": "C. Lamb",
+         "shortName": "C. Lamb"
+        },
+        "stats": [
+         "8",
+         "121",
+         "15.1",
+         "1",
+         "41"
+        ]
+       },
+       {
+        "athlete": {
+         "displayName": "G. Pickens",
+         "shortName": "G. Pickens"
+        },
+        "stats": [
+         "6",
+         "84",
+         "14.0",
+         "1",
+         "33"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "21",
+     "displayName": "Philadelphia Eagles",
+     "shortDisplayName": "Eagles",
+     "abbreviation": "PHI",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "text": "Philadelphia Passing",
+      "labels": [
+       "C/ATT",
+       "YDS",
+       "TD",
+       "INT",
+       "QBR"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "displayName": "J. Hurts",
+         "shortName": "J. Hurts"
+        },
+        "stats": [
+         "19/31",
+         "214",
+         "1",
+         "1",
+         "51.2"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "text": "Philadelphia Rushing",
+      "labels": [
+       "CAR",
+       "YDS",
+       "AVG",
+       "TD",
+       "LONG"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "displayName": "S. Barkley",
+         "shortName": "S. Barkley"
+        },
+        "stats": [
+         "21",
+         "97",
+         "4.6",
+         "1",
+         "19"
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "scoringPlays": [
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:12"
+   },
+   "team": {
+    "id": "21"
+   },
+   "text": "Saquon Barkley 4 Yd Run (Jake Elliott Kick)",
+   "awayScore": 0,
+   "homeScore": 7
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:40"
+   },
+   "team": {
+    "id": "6"
+   },
+   "text": "Brandon Aubrey 54 Yd Field Goal",
+   "awayScore": 3,
+   "homeScore": 7
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "11:05"
+   },
+   "team": {
+    "id": "6"
+   },
+   "text": "CeeDee Lamb 41 Yd pass from Dak Prescott (Brandon Aubrey Kick)",
+   "awayScore": 10,
+   "homeScore": 7
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "0:31"
+   },
+   "team": {
+    "id": "6"
+   },
+   "text": "Javonte Williams 3 Yd Run (Brandon Aubrey Kick)",
+   "awayScore": 17,
+   "homeScore": 10
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:58"
+   },
+   "team": {
+    "id": "6"
+   },
+   "text": "George Pickens 18 Yd pass from Dak Prescott (Brandon Aubrey Kick)",
+   "awayScore": 27,
+   "homeScore": 20
+  }
+ ],
+ "winprobability": [
+  {
+   "homeWinPercentage": 0.62
+  },
+  {
+   "homeWinPercentage": 0.66
+  },
+  {
+   "homeWinPercentage": 0.7
+  },
+  {
+   "homeWinPercentage": 0.63
+  },
+  {
+   "homeWinPercentage": 0.55
+  },
+  {
+   "homeWinPercentage": 0.48
+  },
+  {
+   "homeWinPercentage": 0.4
+  },
+  {
+   "homeWinPercentage": 0.33
+  },
+  {
+   "homeWinPercentage": 0.38
+  },
+  {
+   "homeWinPercentage": 0.45
+  },
+  {
+   "homeWinPercentage": 0.52
+  },
+  {
+   "homeWinPercentage": 0.47
+  },
+  {
+   "homeWinPercentage": 0.41
+  },
+  {
+   "homeWinPercentage": 0.3
+  },
+  {
+   "homeWinPercentage": 0.22
+  },
+  {
+   "homeWinPercentage": 0.12
+  },
+  {
+   "homeWinPercentage": 0.05
+  },
+  {
+   "homeWinPercentage": 0.01
+  }
+ ]
+}
