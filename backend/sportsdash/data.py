@@ -47,9 +47,10 @@ def standings(cfg: AppConfig, league_key: str) -> list[StandingsGroup]:
     if lg.is_golf:
         return []
     groups = adapter_for(lg).standings()
-    fav = cfg.team_ids()
-    # Groups containing one of your teams first.
-    return sorted(groups, key=lambda grp: not grp.has_team(fav))
+    fav = {t.espn_id for t in cfg.teams if league_key in t.leagues}
+    # Your team's conference first, with your division at the top of it.
+    my_confs = {grp.parent for grp in groups if grp.parent and grp.has_team(fav)}
+    return sorted(groups, key=lambda grp: (not (grp.has_team(fav) or grp.parent in my_confs), not grp.has_team(fav)))
 
 
 @dataclass
@@ -60,12 +61,24 @@ class TeamPanel:
     next_game: Game | None = None
     next_odds: list[Odds] = field(default_factory=list)
     record: str = ""
+    logo: str = ""
+    standing: str = ""  # "3rd in ACC"
+    rank: int | None = None  # in the league's poll, if it has one
 
 
 def _team_panel(cfg: AppConfig, team: TeamConfig, lg: LeagueConfig) -> TeamPanel:
     adapter = adapter_for(lg)
     games = adapter.team_schedule(team.espn_id)  # type: ignore[union-attr]
-    panel = TeamPanel(team=team, league=lg, games=games)
+    info = adapter.team_info(team.espn_id)  # type: ignore[union-attr]
+    poll = adapter.poll()  # type: ignore[union-attr]
+    panel = TeamPanel(
+        team=team,
+        league=lg,
+        games=games,
+        logo=info.get("logo") or "",
+        standing=info.get("standingSummary") or "",
+        rank=poll.ranks().get(team.espn_id) if poll else None,
+    )
     upcoming = [gm for gm in games if gm.state != "post"]
     if upcoming:
         panel.next_game = upcoming[0]
@@ -86,6 +99,24 @@ def _won(gm: Game, team_id: str) -> bool:
         return float(me.score) > float(other.score)
     except ValueError:
         return False
+
+
+def team_panel(cfg: AppConfig, lg: LeagueConfig, team_id: str) -> TeamPanel | None:
+    """Panel for any team in the league, configured or not. None if ESPN doesn't know it."""
+    team = cfg.team_for(team_id, lg.key)
+    if team is None:
+        info = adapter_for(lg).team_info(team_id)  # type: ignore[union-attr]
+        if not info:
+            return None
+        color = (info.get("color") or "").lstrip("#")
+        team = TeamConfig(
+            name=info.get("displayName") or info.get("name") or "",
+            short=info.get("abbreviation") or "",
+            espn_id=team_id,
+            leagues=[lg.key],
+            color=f"#{color}" if color else "#888888",
+        )
+    return _team_panel(cfg, team, lg)
 
 
 def team_panels(cfg: AppConfig, keys: list[str] | None = None) -> list[TeamPanel]:

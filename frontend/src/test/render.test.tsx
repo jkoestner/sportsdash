@@ -57,6 +57,10 @@ const VARIANTS: Record<string, (d: typeof sample) => typeof sample> = {
     standings_nfl: { league: "nfl", groups: [], tournaments: [] },
     standings_pga: { league: "pga", groups: [], tournaments: [] },
     teams: [],
+    rankings_ncaaf: { ...d.rankings_ncaaf, entries: [] },
+    team: { ...d.team, games: [], next_game: null as unknown as typeof d.team.next_game, next_odds: [] },
+    playoffs_mlb: { ...d.playoffs_mlb, stages: [], other: [] },
+    playoffs_nhl: { ...d.playoffs_nhl, stages: [], other: [] },
   }),
 };
 
@@ -67,6 +71,11 @@ const PAGES: [string, string][] = [
   ["/standings?league=nfl", "standings_nfl"],
   ["/standings?league=pga", "standings_pga"],
   ["/teams", "teams"],
+  ["/team/ncaaf/61", "team"],
+  ["/playoffs?league=mlb", "playoffs_mlb"],
+  ["/playoffs?league=nhl", "playoffs_nhl"],
+  ["/standings?league=ncaaf", "standings_ncaaf"],
+  ["/?date=2026-10-03&top25=1", "scores"],
   ["/game/nfl/401772001", "game"],
   ["/game/epl/740901", "game_epl"],
   ["/golf/pga/401703510", "golf"],
@@ -81,6 +90,11 @@ function render(url: string, d: typeof sample): string {
   qc.setQueryData(["standings", "nfl"], d.standings_nfl);
   qc.setQueryData(["standings", "pga"], d.standings_pga);
   qc.setQueryData(["teams"], d.teams);
+  qc.setQueryData(["team", "ncaaf", "61"], d.team);
+  qc.setQueryData(["standings", "ncaaf"], d.standings_ncaaf);
+  qc.setQueryData(["rankings", "ncaaf"], d.rankings_ncaaf);
+  qc.setQueryData(["playoffs", "mlb"], d.playoffs_mlb);
+  qc.setQueryData(["playoffs", "nhl"], d.playoffs_nhl);
   qc.setQueryData(["game", "nfl", "401772001"], d.game);
   qc.setQueryData(["game", "epl", "740901"], d.game_epl);
   qc.setQueryData(["golf", "pga", "401703510"], d.golf);
@@ -108,4 +122,45 @@ it("real data shows real content", () => {
   expect(html).toContain("Your teams");
   expect(html).toContain("Virginia");
   expect(html).toContain("UVA -3");
+});
+
+it("Top 25 filter keeps ranked college games and your teams", () => {
+  const all = render("/?date=2026-10-03", sample);
+  const top = render("/?date=2026-10-03&top25=1", sample);
+  expect(all).toContain("NCAAF Top 25 only");
+  expect(top).toContain("Georgia"); // No. 2 at No. 4
+  expect(top).toContain("Virginia"); // unranked, but pinned under Your teams
+  expect(top).toContain("Arsenal"); // EPL has no poll, so it isn't filtered
+  expect(top).toContain('href="/?date=2026-10-04&amp;top25=1"'); // day strip keeps the filter
+});
+
+it("team pages and the AP poll link to each other", () => {
+  const team = render("/team/ncaaf/61", sample);
+  expect(team).toContain("Georgia Bulldogs");
+  expect(team).toContain("1st in SEC, AP No. 2");
+  const poll = render("/standings?league=ncaaf", sample);
+  expect(poll).toContain("AP Top 25");
+  expect(poll).toContain('href="/team/ncaaf/2390"');
+  const game = render("/game/nfl/401772001", sample);
+  expect(game).toContain('href="/team/nfl/');
+});
+
+it("playoffs show the bracket, live games, and last season before the next starts", () => {
+  const mlb = render("/playoffs?league=mlb", sample);
+  expect(mlb).toContain("Division Series");
+  expect(mlb).toContain("DET wins series 2-0");
+  expect(mlb).toContain("Up next"); // the live NLWC game 3 and ALDS game 1
+  expect(mlb).toContain("World Series"); // drawn out to the final before it's decided
+  expect(mlb).toContain("Not scheduled yet"); // Division Series matchups ESPN hasn't listed
+  expect(mlb).toContain("if needed");
+  expect(mlb).toContain('href="/team/mlb/6"'); // team names open team pages
+  expect(mlb).not.toContain("/playoffs?league=epl"); // no playoffs: no tab
+  const nhl = render("/playoffs?league=nhl", sample);
+  expect(nhl).toContain("The next NHL playoffs start Sunday, April 11");
+});
+
+it("standings label each conference once, above its divisions", () => {
+  const html = render("/standings?league=nfl", sample);
+  expect(html.match(/class="conf-head"/g)).toHaveLength(2);
+  expect(html.indexOf("NFC East")).toBeLessThan(html.indexOf("American Football Conference"));
 });

@@ -15,6 +15,7 @@ interface Settings {
   enabled: LeagueInfo[]; // in config order
   isEnabled: (key: string) => boolean;
   toggle: (key: string) => void;
+  setAll: (on: boolean) => void;
   leagueName: (key: string) => string;
 }
 
@@ -34,17 +35,21 @@ export function SettingsProvider({ config, children }: { config: AppConfig; chil
   // Store the *hidden* leagues, so a league newly added to config.yaml shows up by default.
   const [hidden, setHidden] = useState<string[]>(readHidden);
 
-  const toggle = useCallback((key: string) => {
-    setHidden((prev) => {
-      const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
+  const save = useCallback((next: string[]) => {
+    setHidden(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
   }, []);
+
+  const toggle = useCallback(
+    (key: string) => save(hidden.includes(key) ? hidden.filter((k) => k !== key) : [...hidden, key]),
+    [hidden, save],
+  );
+
+  const setAll = useCallback((on: boolean) => save(on ? [] : config.leagues.map((l) => l.key)), [config, save]);
 
   const value = useMemo<Settings>(() => {
     const names = new Map(config.leagues.map((l) => [l.key, l.name]));
@@ -54,9 +59,10 @@ export function SettingsProvider({ config, children }: { config: AppConfig; chil
       enabled: config.leagues.filter((l) => !hidden.includes(l.key)),
       isEnabled: (key) => !hidden.includes(key),
       toggle,
+      setAll,
       leagueName: (key) => names.get(key) ?? key.toUpperCase(),
     };
-  }, [config, hidden, toggle]);
+  }, [config, hidden, toggle, setAll]);
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 }

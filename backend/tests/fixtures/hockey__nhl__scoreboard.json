@@ -1,0 +1,14 @@
+{
+ "leagues": [
+  {
+   "abbreviation": "NHL",
+   "season": {
+    "year": 2027,
+    "type": {
+     "type": 1
+    }
+   }
+  }
+ ],
+ "events": []
+}

@@ -1,0 +1,173 @@
+{
+ "team": {
+  "id": "61",
+  "displayName": "Georgia Bulldogs",
+  "shortDisplayName": "Georgia",
+  "abbreviation": "UGA",
+  "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/61.png",
+  "color": "ba0c2f",
+  "standingSummary": "1st in SEC"
+ },
+ "events": [
+  {
+   "id": "401755111",
+   "date": "2026-09-19T19:30Z",
+   "name": "Duke Blue Devils at Georgia Bulldogs",
+   "shortName": "DUKE @ UGA",
+   "competitions": [
+    {
+     "id": "401755111",
+     "date": "2026-09-19T19:30Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Sanford Stadium",
+      "address": {
+       "city": "Athens",
+       "state": "GA"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "61",
+        "displayName": "Georgia Bulldogs",
+        "shortDisplayName": "Georgia",
+        "abbreviation": "UGA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/61.png"
+       },
+       "score": {
+        "value": 38.0,
+        "displayValue": "38"
+       },
+       "winner": true
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "150",
+        "displayName": "Duke Blue Devils",
+        "shortDisplayName": "Duke",
+        "abbreviation": "DUKE",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png"
+       },
+       "score": {
+        "value": 10.0,
+        "displayValue": "10"
+       },
+       "winner": false
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "post",
+       "name": "STATUS_FINAL",
+       "shortDetail": "Final",
+       "detail": "Final",
+       "completed": true
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "SEC Network"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "post",
+     "name": "STATUS_FINAL",
+     "shortDetail": "Final",
+     "detail": "Final",
+     "completed": true
+    }
+   }
+  },
+  {
+   "id": "401755150",
+   "date": "2026-10-03T23:30Z",
+   "name": "Georgia Bulldogs at Alabama Crimson Tide",
+   "shortName": "UGA @ BAMA",
+   "competitions": [
+    {
+     "id": "401755150",
+     "date": "2026-10-03T23:30Z",
+     "timeValid": true,
+     "neutralSite": false,
+     "venue": {
+      "id": "1",
+      "fullName": "Bryant-Denny Stadium",
+      "address": {
+       "city": "Tuscaloosa",
+       "state": "AL"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "team": {
+        "id": "333",
+        "displayName": "Alabama Crimson Tide",
+        "shortDisplayName": "Alabama",
+        "abbreviation": "ALA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png"
+       }
+      },
+      {
+       "homeAway": "away",
+       "team": {
+        "id": "61",
+        "displayName": "Georgia Bulldogs",
+        "shortDisplayName": "Georgia",
+        "abbreviation": "UGA",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/61.png"
+       }
+      }
+     ],
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "state": "pre",
+       "name": "STATUS_SCHEDULED",
+       "shortDetail": "Sat, Oct 3",
+       "detail": "Sat, Oct 3",
+       "completed": false
+      }
+     },
+     "broadcasts": [
+      {
+       "media": {
+        "shortName": "ABC"
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "state": "pre",
+     "name": "STATUS_SCHEDULED",
+     "shortDetail": "Sat, Oct 3",
+     "detail": "Sat, Oct 3",
+     "completed": false
+    }
+   }
+  }
+ ]
+}

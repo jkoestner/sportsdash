@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router";
 import { Logo } from "../components/Logo";
 import { OddsByBook } from "../components/Odds";
 import { ErrorBox, Skeleton } from "../components/QueryState";
 import { Empty, Section } from "../components/Section";
 import { WinProbChart } from "../components/WinProbChart";
-import { gameQuery } from "../lib/api";
+import { gameQuery, teamQuery } from "../lib/api";
 import { clock, localDay, shortDay } from "../lib/format";
 import { isMyTeam, location } from "../lib/games";
 import { useSettings } from "../lib/settings";
@@ -189,15 +189,20 @@ function Scoreboard({ game }: { game: Game }) {
 
 function BigTeam({ team, game, side }: { team: Team; game: Game; side: "home" | "away" }) {
   const { config } = useSettings();
+  const queryClient = useQueryClient();
   const mine = isMyTeam(team, game.league, config.teams);
+  const href = `/team/${game.league}/${team.id}`;
+  const prefetch = () => queryClient.prefetchQuery(teamQuery(game.league, team.id));
   return (
     <div className={`hb-team ${side}${mine ? " mine" : ""}`}>
-      <Logo src={team.logo} abbr={team.abbr} size="lg" />
+      <Link to={href} onPointerEnter={prefetch} tabIndex={-1} aria-hidden="true">
+        <Logo src={team.logo} abbr={team.abbr} size="lg" />
+      </Link>
       <div>
-        <div className="hb-name">
+        <Link to={href} onPointerEnter={prefetch} onFocus={prefetch} className="hb-name" title={`${team.name} schedule`}>
           {team.rank && <span className="rank">{team.rank}</span>}
           {team.name}
-        </div>
+        </Link>
         <div className="hb-record">{team.record}</div>
       </div>
       <div className={`hb-score${game.state === "post" && team.winner ? " winner" : ""}`}>

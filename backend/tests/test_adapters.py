@@ -25,6 +25,8 @@ class RecordingClient:
         self.calls: list[dict] = []
 
     def get(self, url, params=None, ttl=0):
+        if not url.endswith("/scoreboard"):
+            return {}  # e.g. the rankings feed: no poll, so ESPN's ranks are kept
         self.calls.append(dict(params or {}))
         day = params["dates"]
         return {"events": [{
@@ -109,6 +111,53 @@ def test_team_schedule_and_record():
     assert dal.next_game.id == "401772045"
     assert len(dal.next_odds) == 2
     assert panels[("UVA", "ncaaf")].record == "2-1"
+
+
+def test_poll_reranks_only_games_after_its_release():
+    from sportsdash.adapters.parse import parse_poll
+
+    adapter = adapter_for(CFG.league("ncaaf"))
+    poll = adapter.poll()
+    assert poll.ranks()["2390"] == 10
+    sched = adapter.team_schedule("61")
+    before, after = sched  # Sept 19 final, Oct 3 game; poll released Sept 27
+    assert before.home.rank is None  # kept the scoreboard's rank at the time (none in the fixture)
+    assert (after.home.rank, after.away.rank) == (4, 2)
+    assert adapter_for(CFG.league("nfl")).poll() is None
+    assert parse_poll({"rankings": [{"type": "usa", "ranks": []}]}, "ap") is None
+    assert parse_poll({}, "ap") is None
+
+
+def test_playoff_round_and_stage_names():
+    from sportsdash.adapters.playoffs import round_name, stage_name
+
+    assert round_name("ALDS - Game 2") == "ALDS"
+    assert round_name("AFC Wild Card Playoffs") == "AFC Wild Card"
+    cfp = "College Football Playoff"
+    assert round_name("College Football Playoff Quarterfinal at the Rose Bowl Presented by Prudential", cfp) == "Quarterfinal"
+    assert round_name("College Football Playoff First Round Game", cfp) == "First Round"
+    ncaa = "NCAA Men's Basketball Championship"
+    assert round_name("NCAA Men's Basketball Championship - South Region - Sweet 16", ncaa) == "South Region - Sweet 16"
+    assert stage_name(["ALDS", "NLDS"]) == "Division Series"
+    assert stage_name(["East Final", "West Final"]) == "Conference Finals"
+    assert stage_name(["AFC Championship", "NFC Championship"]) == "Conference Championships"
+    assert stage_name(["Stanley Cup Final"]) == "Stanley Cup Final"
+    assert stage_name(["East Region - Sweet 16", "West Region - Sweet 16"]) == "Sweet 16"
+    assert stage_name(["East 1st Round"]) == "1st Round"
+
+
+def test_standings_request_divisions():
+    client = RecordingStandingsClient()
+    TeamSportAdapter(CFG.league("mlb"), client=client).standings()  # type: ignore[arg-type]
+    assert client.params == {"level": 3, "sort": "winpercent:desc"}  # config.yaml standings_params
+
+
+class RecordingStandingsClient:
+    params: dict = {}
+
+    def get(self, url, params=None, ttl=0):
+        self.params = dict(params or {})
+        return {}
 
 
 def test_golf():

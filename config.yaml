@@ -13,12 +13,18 @@ leagues:
     sport: football
     league: nfl
     standings_columns: [W, L, T, PCT, PF, PA, DIFF, DIV, STRK]
+    # Bracket format: each round and how many matchups it has. Rounds ESPN hasn't scheduled
+    # yet show as TBD, so the bracket always runs out to the final.
+    playoffs_rounds: {Wild Card: 6, Divisional: 4, Conference Championships: 2, Super Bowl: 1}
 
   - key: ncaaf
     name: NCAAF
     sport: football
     league: college-football
     params: {groups: 80}          # 80 = all FBS games (default is Top 25 only)
+    rankings: ap                  # AP Top 25: rank badges, Top 25 filter, poll on Standings
+    playoffs_match: College Football Playoff   # bracket = CFP games; other bowls are listed below it
+    playoffs_rounds: {First Round: 4, Quarterfinal: 4, Semifinal: 2, National Championship: 1}
     standings_columns: [CONF, Total, PF, PA, STRK]
 
   - key: ncaab
@@ -26,6 +32,8 @@ leagues:
     sport: basketball
     league: mens-college-basketball
     params: {groups: 50}          # 50 = all Division I
+    playoffs_match: NCAA Men's Basketball Championship   # the tournament; NIT etc. listed below it
+    playoffs_rounds: {First Four: 4, 1st Round: 32, 2nd Round: 16, Sweet 16: 8, Elite 8: 4, Final Four: 2, National Championship: 1}
     standings_columns: [CONF, Total, PCT, STRK]
 
   - key: epl
@@ -33,6 +41,22 @@ leagues:
     sport: soccer
     league: eng.1
     standings_columns: [GP, W, D, L, F, A, GD, P]
+    playoffs: false               # no postseason
+
+  - key: nhl
+    name: NHL
+    sport: hockey
+    league: nhl
+    standings_columns: [GP, W, L, OTL, PTS, GF, GA, DIFF, STRK]
+    playoffs_rounds: {1st Round: 8, 2nd Round: 4, Conference Finals: 2, Stanley Cup Final: 1}
+
+  - key: mlb
+    name: MLB
+    sport: baseball
+    league: mlb
+    standings_columns: [W, L, PCT, GB, Home, AWAY, STRK]
+    standings_params: {sort: "winpercent:desc"}   # ESPN's default MLB division order is scrambled
+    playoffs_rounds: {Wild Card: 4, Division Series: 4, Championship Series: 2, World Series: 1}
 
   - key: pga
     name: PGA Tour

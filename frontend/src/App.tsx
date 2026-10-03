@@ -7,9 +7,11 @@ import { configQuery } from "./lib/api";
 import { SettingsProvider, useSettings } from "./lib/settings";
 import { GamePage } from "./pages/Game";
 import { GolfPage, NotFoundPage } from "./pages/GolfEvent";
+import { PlayoffsPage } from "./pages/Playoffs";
 import { SchedulePage } from "./pages/Schedule";
 import { ScoresPage } from "./pages/Scores";
 import { StandingsPage } from "./pages/Standings";
+import { TeamPage } from "./pages/Team";
 import { TeamsPage } from "./pages/Teams";
 
 export default function App() {
@@ -42,7 +44,9 @@ export default function App() {
           <Route index element={<ScoresPage />} />
           <Route path="schedule" element={<SchedulePage />} />
           <Route path="standings" element={<StandingsPage />} />
+          <Route path="playoffs" element={<PlayoffsPage />} />
           <Route path="teams" element={<TeamsPage />} />
+          <Route path="team/:league/:id" element={<TeamPage />} />
           <Route path="game/:league/:id" element={<GamePage />} />
           <Route path="golf/:league/:id" element={<GolfPage />} />
           <Route path="*" element={<NotFoundPage />} />
@@ -80,6 +84,7 @@ const NAV = [
   { to: "/", label: "Scores" },
   { to: "/schedule", label: "Schedule" },
   { to: "/standings", label: "Standings" },
+  { to: "/playoffs", label: "Playoffs" },
   { to: "/teams", label: "Your teams" },
 ];
 
@@ -104,7 +109,7 @@ function Header() {
 }
 
 function LeagueChips() {
-  const { config, isEnabled, toggle } = useSettings();
+  const { config, enabled, isEnabled, toggle, setAll } = useSettings();
   return (
     <fieldset className="league-chips">
       <legend className="sr-only">Leagues to show</legend>
@@ -114,6 +119,14 @@ function LeagueChips() {
           {l.name}
         </label>
       ))}
+      <span className="chip-bulk">
+        <button type="button" onClick={() => setAll(true)} disabled={enabled.length === config.leagues.length}>
+          Select all
+        </button>
+        <button type="button" onClick={() => setAll(false)} disabled={enabled.length === 0}>
+          Deselect all
+        </button>
+      </span>
     </fieldset>
   );
 }

@@ -26,6 +26,11 @@ class LeagueConfig:
     kind: str = "team"  # "team" or "golf"
     params: dict = field(default_factory=dict)
     standings_columns: list[str] = field(default_factory=list)
+    standings_params: dict = field(default_factory=dict)  # extra query params, e.g. {sort: ...}
+    playoffs: bool = True  # False hides the league on the Playoffs page (e.g. soccer leagues)
+    playoffs_match: str = ""  # only postseason games whose note contains this go in the bracket
+    playoffs_rounds: dict = field(default_factory=dict)  # round -> matchups, to draw the bracket out to the final
+    rankings: str = ""  # ESPN poll type to use for ranks, e.g. "ap"; empty = no poll
 
     @property
     def is_golf(self) -> bool:

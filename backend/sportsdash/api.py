@@ -81,7 +81,17 @@ def get_config() -> dict:
         "timezone": cfg.timezone,
         "refresh_seconds": cfg.refresh_seconds,
         "schedule_days": cfg.schedule_days,
-        "leagues": [{"key": lg.key, "name": lg.name, "sport": lg.sport, "kind": lg.kind} for lg in cfg.leagues],
+        "leagues": [
+            {
+                "key": lg.key,
+                "name": lg.name,
+                "sport": lg.sport,
+                "kind": lg.kind,
+                "rankings": lg.rankings,
+                "playoffs": lg.playoffs and not lg.is_golf,
+            }
+            for lg in cfg.leagues
+        ],
         "teams": out(cfg.teams),
     }
 
@@ -123,6 +133,33 @@ def get_standings(league: str) -> dict:
 @app.get("/api/teams")
 def get_teams() -> list:
     return out(data.team_panels(cfg))
+
+
+@app.get("/api/team/{league}/{team_id}")
+def get_team(league: str, team_id: str) -> dict:
+    lg = league_or_404(league)
+    if lg.is_golf:
+        raise HTTPException(404, "Golf has no teams")
+    panel = data.team_panel(cfg, lg, team_id)
+    if panel is None:
+        raise HTTPException(404, "ESPN doesn't have a schedule for this team.")
+    return out(panel)
+
+
+@app.get("/api/rankings/{league}")
+def get_rankings(league: str) -> dict | None:
+    lg = league_or_404(league)
+    if lg.is_golf:
+        return None
+    return out(adapter_for(lg).poll())  # null when the league has no poll configured
+
+
+@app.get("/api/playoffs/{league}")
+def get_playoffs(league: str) -> dict | None:
+    lg = league_or_404(league)
+    if lg.is_golf or not lg.playoffs:
+        return None
+    return out(adapter_for(lg).playoffs(today()))  # null when ESPN has no postseason
 
 
 @app.get("/api/game/{league}/{event_id}")

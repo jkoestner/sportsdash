@@ -106,9 +106,75 @@ class StandingsGroup:
     name: str
     columns: list[str]
     rows: list[StandingsRow]
+    parent: str = ""  # conference, when this group is a division inside one
 
     def has_team(self, team_ids: set[str]) -> bool:
         return any(r.team_id in team_ids for r in self.rows)
+
+
+@dataclass
+class PollEntry:
+    rank: int
+    team_id: str
+    team: str
+    abbr: str
+    logo: str
+    record: str = ""
+    previous: int | None = None  # last week's rank; None if unranked
+    points: int | None = None
+    first_place_votes: int = 0
+
+
+@dataclass
+class Poll:
+    name: str  # "AP Top 25"
+    week: str  # "Week 5"
+    date: datetime | None
+    entries: list[PollEntry] = field(default_factory=list)
+
+    def ranks(self) -> dict[str, int]:
+        return {e.team_id: e.rank for e in self.entries}
+
+
+@dataclass
+class SeriesTeam:
+    id: str
+    name: str
+    short: str
+    abbr: str
+    logo: str
+    rank: int | None = None  # poll rank (college); pro leagues have none
+    wins: int = 0
+    winner: bool = False
+
+
+@dataclass
+class PlayoffSeries:
+    """One matchup in a round: a best-of-N series, or a single game (best_of 1)."""
+    round: str  # "ALDS", "AFC Wild Card", "East 1st Round"
+    best_of: int
+    teams: list[SeriesTeam]
+    summary: str = ""  # "LAD lead series 2-1"
+    completed: bool = False
+    games: list[Game] = field(default_factory=list)
+
+
+@dataclass
+class PlayoffStage:
+    """A bracket column: every series played at the same stage, e.g. both Division Series."""
+    name: str  # "Division Series", "Wild Card", "1st Round"
+    series: list[PlayoffSeries] = field(default_factory=list)
+
+
+@dataclass
+class Playoffs:
+    league: str
+    season: int  # ESPN's season year, e.g. 2026 (NHL 2026 = the 2025-26 season)
+    start: datetime | None
+    end: datetime | None
+    stages: list[PlayoffStage] = field(default_factory=list)
+    other: list[Game] = field(default_factory=list)  # postseason games outside the bracket (bowls)
+    next_start: datetime | None = None  # set when this season's playoffs haven't begun
 
 
 @dataclass

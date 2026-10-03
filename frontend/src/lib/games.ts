@@ -9,17 +9,32 @@ export function isMyGame(game: Game, teams: TeamConfig[]): boolean {
   );
 }
 
-export function isMyTeam(team: Team, league: string, teams: TeamConfig[]): boolean {
+export function isMyTeam(team: Pick<Team, "id">, league: string, teams: TeamConfig[]): boolean {
   return teams.some((t) => t.espn_id === team.id && t.leagues.includes(league));
 }
 
 const STATE_ORDER = { in: 0, pre: 1, post: 2 } as const;
 
-/** Live first, then upcoming, then finished; by start time within each. */
+/** Live first, then upcoming, then finished; by start time within each, then ranked matchups first. */
 export function sortLiveFirst(games: Game[]): Game[] {
   return [...games].sort(
-    (a, b) => STATE_ORDER[a.state] - STATE_ORDER[b.state] || byStart(a, b),
+    (a, b) => STATE_ORDER[a.state] - STATE_ORDER[b.state] || byStart(a, b) || byRank(a, b),
   );
+}
+
+/** The better of the two teams' ranks (1 is best); Infinity when neither is ranked. */
+export function bestRank(game: Game): number {
+  return Math.min(game.home.rank || Infinity, game.away.rank || Infinity);
+}
+
+function byRank(a: Game, b: Game): number {
+  const ra = bestRank(a);
+  const rb = bestRank(b);
+  return ra === rb ? 0 : ra < rb ? -1 : 1; // not ra - rb: Infinity - Infinity is NaN
+}
+
+export function isRanked(game: Game): boolean {
+  return bestRank(game) !== Infinity;
 }
 
 export function byStart(a: { start: string | null }, b: { start: string | null }): number {

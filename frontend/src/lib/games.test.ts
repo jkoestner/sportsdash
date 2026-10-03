@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Game, Team, TeamConfig } from "../types";
-import { groupBy, isMyGame, isOff, perspective, sortLiveFirst } from "./games";
+import { bestRank, groupBy, isMyGame, isOff, isRanked, perspective, sortLiveFirst } from "./games";
 
 function team(id: string, extra: Partial<Team> = {}): Team {
   return { id, name: id, short: id, abbr: id, logo: "", score: "", record: "", rank: null, winner: false, home_away: "", linescores: [], ...extra };
@@ -38,6 +38,28 @@ describe("sortLiveFirst", () => {
       game("tbd", { start: null }),
     ];
     expect(sortLiveFirst(games).map((g) => g.id)).toEqual(["live", "early", "late", "tbd", "final"]);
+  });
+  it("puts ranked matchups first among games at the same time, best rank first", () => {
+    const at = (id: string, home: number | null, away: number | null, start = "2026-10-03T16:00:00Z") =>
+      game(id, { start, home: team("h", { rank: home }), away: team("a", { rank: away }) });
+    const games = [
+      at("unranked", null, null),
+      at("no18", 18, null),
+      at("earlier", null, null, "2026-10-03T12:00:00Z"),
+      at("no3", null, 3),
+      at("unranked2", null, null),
+    ];
+    // Time still wins: the earlier unranked game stays on top.
+    expect(sortLiveFirst(games).map((g) => g.id)).toEqual(["earlier", "no3", "no18", "unranked", "unranked2"]);
+  });
+});
+
+describe("bestRank / isRanked", () => {
+  it("uses the better-ranked team and treats null as unranked", () => {
+    const g = game("r", { home: team("h", { rank: 12 }), away: team("a", { rank: 5 }) });
+    expect(bestRank(g)).toBe(5);
+    expect(isRanked(g)).toBe(true);
+    expect(isRanked(game("u"))).toBe(false);
   });
 });
 

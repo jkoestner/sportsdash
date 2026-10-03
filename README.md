@@ -3,7 +3,7 @@
 A self-hosted scores, schedule and standings dashboard. It runs a React +
 TypeScript frontend (Vite) on top of a small Python API (FastAPI).
 
-Out of the box it follows **NFL, NCAAF, NCAAB, EPL and the PGA Tour**, with
+Out of the box it follows **NFL, NCAAF, NCAAB, EPL, NHL, MLB and the PGA Tour**, with
 **Virginia (football + basketball)** and the **Dallas Cowboys** pinned as your teams.
 Every game shows its time, venue, TV and betting lines, and each one opens to a
 box score.
@@ -65,8 +65,8 @@ This serves made-up but ESPN-shaped responses from `backend/tests/fixtures/`.
 **Checks:**
 
 ```powershell
-cd backend;  python -m pytest -q          # 27 API + adapter tests
-cd frontend; npm test                      # 68 tests: helpers + every page rendered with broken data
+cd backend;  python -m pytest -q          # 38 API + adapter tests
+cd frontend; npm test                      # 106 tests: helpers + every page rendered with broken data
 cd frontend; npm run build                 # type-check + production build
 ```
 
@@ -85,14 +85,18 @@ cd frontend; npm run build                 # type-check + production build
 
 | URL | What's on it |
 | --- | --- |
-| `/` and `/?date=2026-10-03` | Day strip (two days back, five ahead). Your teams' games pinned at the top, then each league, live games first. Auto-refreshes while games can be live. |
+| `/` and `/?date=2026-10-03` | Day strip (two days back, five ahead). Your teams' games pinned at the top, then each league, live games first, then by start time, with ranked matchups first among games at the same time. Auto-refreshes while games can be live. |
+| `/?top25=1` | Same, with leagues that have a poll (NCAAF) narrowed to games with a ranked team. Your teams stay pinned. |
 | `/schedule?days=7&mine=1` | Next 3 / 7 / 14 days by day, with a "Your teams only" toggle. |
-| `/standings?league=ncaaf` | Groups containing your teams first, with your rows highlighted. PGA shows the leaderboard. |
+| `/standings?league=nfl` | Division tables under conference headings, your team's conference and division first, your rows highlighted. NCAAF adds the AP Top 25 on top. PGA shows the leaderboard. |
+| `/playoffs?league=mlb` | The postseason bracket: one column per round, each series with its games, drawn out to the final with TBD teams for rounds not yet decided. This week's playoff games on top; bowls and other non-bracket games below. Before a league's playoffs start, shows last season's. |
 | `/teams` | Each team's next game with lines from every sportsbook, plus its full season. |
+| `/team/ncaaf/61` | The same card for any team. Click a team on a game page, in the poll or in standings. |
 | `/game/nfl/401772001` | Scoreboard, linescore, win probability, team stats, scoring plays, player stats, game info, betting lines. |
 | `/golf/pga/401703510` | Full leaderboard. |
 
 The league chips in the header filter every page and are remembered in the browser.
+"Select all" / "Deselect all" next to them flip every league at once.
 
 ## Learning React with this codebase
 
@@ -166,6 +170,18 @@ Examples: `basketball/nba`, `baseball/mlb`, `soccer/usa.1` (MLS),
 ESPN returns only ranked games: `80` is all FBS football, `50` is all Division I
 basketball.
 
+`rankings` names the ESPN poll used for rank badges, the Top 25 filter and the poll on
+Standings: `ap` (AP Top 25), `usa` (Coaches Poll), or `cfp` once the playoff rankings are out.
+Add `rankings: ap` to `ncaab` to get the same for basketball.
+
+`standings_params` adds query parameters to the standings request (MLB uses
+`{sort: "winpercent:desc"}` because ESPN's default division order is scrambled).
+`playoffs: false` hides a league with no postseason on the Playoffs page, and
+`playoffs_match` keeps only postseason games whose title contains that text in the bracket
+("College Football Playoff" leaves the other bowls in a list below it).
+`playoffs_rounds` is the bracket's format (`{Wild Card: 4, Division Series: 4, ...}`): rounds
+ESPN hasn't scheduled yet are drawn as TBD matchups so the bracket always reaches the final.
+
 `standings_columns` picks columns by ESPN's stat abbreviation. If none match, the
 first ten stats ESPN returns are shown, so a wrong guess still works.
 
@@ -195,3 +211,12 @@ Caching: live days 30 s, future days 10 min, past days and standings 1 h.
 - Betting lines appear only when ESPN publishes them, usually within a week of
   the game.
 - College standings are empty until the season starts (NCAAB until November).
+- Standings are requested with `level=3`, which splits conferences into divisions. Leagues
+  without divisions (college conferences, EPL) come back the same either way.
+- There's no bracket feed. The Playoffs page reads the postseason's dates from the core API
+  (`sports.core.api.espn.com/.../seasons/<year>/types/3`), fetches each day's scoreboard,
+  and groups postseason games by the round in their notes (`ALDS - Game 2`) and the series
+  data ESPN attaches to each game.
+- Scoreboard ranks (`curatedRank`) switch from AP to the CFP rankings in November.
+  With `rankings: ap`, games after the latest AP poll use AP ranks; older games keep
+  the rank each team had at the time.

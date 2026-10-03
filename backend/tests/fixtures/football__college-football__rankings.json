@@ -1,0 +1,102 @@
+{
+ "rankings": [
+  {
+   "id": "1",
+   "name": "AP Top 25",
+   "shortName": "AP Poll",
+   "type": "ap",
+   "date": "2026-09-27T07:00Z",
+   "occurrence": {
+    "number": 5,
+    "type": "week",
+    "displayValue": "Week 5"
+   },
+   "ranks": [
+    {
+     "current": 2,
+     "previous": 3,
+     "points": 1580,
+     "firstPlaceVotes": 9,
+     "recordSummary": "4-0",
+     "team": {
+      "id": "61",
+      "location": "Georgia",
+      "nickname": "Georgia",
+      "abbreviation": "UGA",
+      "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/61.png"
+     }
+    },
+    {
+     "current": 4,
+     "previous": 4,
+     "points": 1490,
+     "firstPlaceVotes": 0,
+     "recordSummary": "4-0",
+     "team": {
+      "id": "333",
+      "location": "Alabama",
+      "nickname": "Alabama",
+      "abbreviation": "ALA",
+      "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png"
+     }
+    },
+    {
+     "current": 10,
+     "previous": 12,
+     "points": 1010,
+     "firstPlaceVotes": 0,
+     "recordSummary": "4-0",
+     "team": {
+      "id": "2390",
+      "location": "Miami",
+      "nickname": "Miami",
+      "abbreviation": "MIA",
+      "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png"
+     }
+    },
+    {
+     "current": 18,
+     "previous": 0,
+     "points": 460,
+     "firstPlaceVotes": 0,
+     "recordSummary": "3-1",
+     "team": {
+      "id": "228",
+      "location": "Clemson",
+      "nickname": "Clemson",
+      "abbreviation": "CLEM",
+      "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png"
+     }
+    }
+   ]
+  },
+  {
+   "id": "2",
+   "name": "AFCA Coaches Poll",
+   "shortName": "AFCA Coaches Poll",
+   "type": "usa",
+   "date": "2026-09-28T07:00Z",
+   "occurrence": {
+    "number": 5,
+    "type": "week",
+    "displayValue": "Week 5"
+   },
+   "ranks": [
+    {
+     "current": 1,
+     "previous": 1,
+     "points": 1600,
+     "firstPlaceVotes": 40,
+     "recordSummary": "4-0",
+     "team": {
+      "id": "333",
+      "location": "Alabama",
+      "nickname": "Alabama",
+      "abbreviation": "ALA",
+      "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png"
+     }
+    }
+   ]
+  }
+ ]
+}

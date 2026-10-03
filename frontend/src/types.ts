@@ -81,6 +81,61 @@ export interface StandingsGroup {
   name: string;
   columns: string[];
   rows: StandingsRow[];
+  parent: string; // conference when this group is a division; "" otherwise
+}
+
+export interface SeriesTeam {
+  id: string;
+  name: string;
+  short: string;
+  abbr: string;
+  logo: string;
+  rank: number | null;
+  wins: number;
+  winner: boolean;
+}
+
+export interface PlayoffSeries {
+  round: string; // "ALDS", "AFC Wild Card", "East 1st Round"
+  best_of: number; // 1 = single game
+  teams: SeriesTeam[];
+  summary: string; // "LAD lead series 2-1"
+  completed: boolean;
+  games: Game[];
+}
+
+export interface PlayoffStage {
+  name: string; // bracket column: "Division Series", "Wild Card"
+  series: PlayoffSeries[];
+}
+
+export interface Playoffs {
+  league: string;
+  season: number;
+  start: string | null;
+  end: string | null;
+  stages: PlayoffStage[];
+  other: Game[]; // postseason games outside the bracket (bowls, NIT)
+  next_start: string | null; // set when this season's playoffs haven't begun
+}
+
+export interface PollEntry {
+  rank: number;
+  team_id: string;
+  team: string;
+  abbr: string;
+  logo: string;
+  record: string;
+  previous: number | null; // last week's rank; null if unranked
+  points: number | null;
+  first_place_votes: number;
+}
+
+export interface Poll {
+  name: string; // "AP Top 25"
+  week: string; // "Week 5"
+  date: string | null;
+  entries: PollEntry[];
 }
 
 export interface PlayerTable {
@@ -116,6 +171,8 @@ export interface LeagueInfo {
   name: string;
   sport: string;
   kind: "team" | "golf";
+  rankings: string; // poll type ("ap"), or "" when the league has no poll
+  playoffs: boolean; // shown on the Playoffs page
 }
 
 export interface TeamConfig {
@@ -161,4 +218,7 @@ export interface TeamPanel {
   next_game: Game | null;
   next_odds: Odds[];
   record: string;
+  logo: string;
+  standing: string; // "3rd in ACC"
+  rank: number | null; // in the league's poll
 }

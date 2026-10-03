@@ -1,12 +1,13 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Fragment } from "react";
 import { Link, useSearchParams } from "react-router";
 import { Leaderboard } from "../components/Golf";
 import { Logo } from "../components/Logo";
 import { ErrorBox, Skeleton } from "../components/QueryState";
 import { Empty } from "../components/Section";
-import { standingsQuery } from "../lib/api";
+import { rankingsQuery, standingsQuery } from "../lib/api";
 import { useSettings } from "../lib/settings";
-import type { StandingsGroup } from "../types";
+import type { Poll, StandingsGroup } from "../types";
 
 export function StandingsPage() {
   const { config, enabled } = useSettings();
@@ -15,6 +16,7 @@ export function StandingsPage() {
   const leagues = enabled.length ? enabled : config.leagues;
   const current = leagues.find((l) => l.key === params.get("league")) ?? leagues[0]!;
   const query = useQuery(standingsQuery(current.key));
+  const poll = useQuery({ ...rankingsQuery(current.key), enabled: !!current.rankings });
   const myIds = new Set(config.teams.filter((t) => t.leagues.includes(current.key)).map((t) => t.espn_id));
 
   let body;
@@ -28,7 +30,13 @@ export function StandingsPage() {
     );
   else
     body = query.data.groups.length ? (
-      query.data.groups.map((g) => <StandingsTable key={g.name} group={g} myIds={myIds} />)
+      query.data.groups.map((g, i, all) => (
+        <Fragment key={`${g.parent}/${g.name}`}>
+          {/* Divisions arrive grouped by conference: label each conference once. */}
+          {g.parent && g.parent !== all[i - 1]?.parent && <h2 className="conf-head">{g.parent}</h2>}
+          <StandingsTable group={g} myIds={myIds} league={current.key} />
+        </Fragment>
+      ))
     ) : (
       <Empty>{current.name} standings aren't published yet. They appear once the season starts.</Empty>
     );
@@ -52,12 +60,61 @@ export function StandingsPage() {
           ))}
         </div>
       </div>
+      {poll.data && poll.data.entries.length > 0 && <PollTable poll={poll.data} myIds={myIds} league={current.key} />}
       {body}
     </div>
   );
 }
 
-function StandingsTable({ group, myIds }: { group: StandingsGroup; myIds: Set<string> }) {
+function PollTable({ poll, myIds, league }: { poll: Poll; myIds: Set<string>; league: string }) {
+  return (
+    <section className="block">
+      <div className="sec-head">
+        <h2>{poll.name}</h2>
+        {poll.week && <span className="count">{poll.week}</span>}
+      </div>
+      <div className="table-wrap">
+        <table className="standings poll">
+          <thead>
+            <tr>
+              <th className="st-team">Team</th>
+              <th>Record</th>
+              <th>Pts</th>
+              <th>Prev</th>
+            </tr>
+          </thead>
+          <tbody>
+            {poll.entries.map((e) => (
+              <tr key={e.team_id} className={myIds.has(e.team_id) ? "mine" : undefined}>
+                <td className="st-team">
+                  <Link to={`/team/${league}/${e.team_id}`} className="st-team-in">
+                    <span className="st-rank">{e.rank}</span>
+                    <Logo src={e.logo} abbr={e.abbr} size="sm" />
+                    <span>
+                      {e.team}
+                      {e.first_place_votes > 0 && <span className="poll-fpv"> ({e.first_place_votes})</span>}
+                    </span>
+                  </Link>
+                </td>
+                <td>{e.record}</td>
+                <td>{e.points ?? ""}</td>
+                <td className={trendClass(e.rank, e.previous)}>{e.previous ?? "NR"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function trendClass(rank: number, previous: number | null): string | undefined {
+  if (previous == null || previous > rank) return "trend-up";
+  if (previous < rank) return "trend-down";
+  return undefined;
+}
+
+function StandingsTable({ group, myIds, league }: { group: StandingsGroup; myIds: Set<string>; league: string }) {
   return (
     <section className="block">
       <div className="sec-head">
@@ -77,11 +134,11 @@ function StandingsTable({ group, myIds }: { group: StandingsGroup; myIds: Set<st
             {group.rows.map((r, i) => (
               <tr key={r.team_id || r.team} className={myIds.has(r.team_id) ? "mine" : undefined}>
                 <td className="st-team">
-                  <div className="st-team-in">
+                  <Link to={`/team/${league}/${r.team_id}`} className="st-team-in">
                     <span className="st-rank">{i + 1}</span>
                     <Logo src={r.logo} abbr={r.abbr} size="sm" />
                     <span>{r.team}</span>
-                  </div>
+                  </Link>
                 </td>
                 {r.values.map((v, j) => (
                   <td key={j}>{v}</td>

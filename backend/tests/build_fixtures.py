@@ -186,6 +186,32 @@ write("football__college-football__scoreboard.json", {
 })
 
 # ── NCAAB (preseason: empty scoreboard) ──────────────────────────────────────
+# AP poll (rankings endpoint). Released Sept 27, so it re-ranks every game after that.
+# MIA is 12th on the scoreboard (curatedRank) but 10th here: the AP rank should win.
+def poll_rank(abbr, current, previous, record, points, fpv=0):
+    t = TEAMS[abbr]
+    return {
+        "current": current, "previous": previous, "points": points, "firstPlaceVotes": fpv,
+        "recordSummary": record,
+        "team": {"id": t["id"], "location": t["shortDisplayName"], "nickname": t["shortDisplayName"],
+                 "abbreviation": t["abbreviation"], "logo": t["logo"]},
+    }
+
+
+write("football__college-football__rankings.json", {"rankings": [
+    {"id": "1", "name": "AP Top 25", "shortName": "AP Poll", "type": "ap", "date": "2026-09-27T07:00Z",
+     "occurrence": {"number": 5, "type": "week", "displayValue": "Week 5"},
+     "ranks": [
+         poll_rank("UGA", 2, 3, "4-0", 1580, 9),
+         poll_rank("BAMA", 4, 4, "4-0", 1490),
+         poll_rank("MIA", 10, 12, "4-0", 1010),
+         poll_rank("CLEM", 18, 0, "3-1", 460),
+     ]},
+    {"id": "2", "name": "AFCA Coaches Poll", "shortName": "AFCA Coaches Poll", "type": "usa", "date": "2026-09-28T07:00Z",
+     "occurrence": {"number": 5, "type": "week", "displayValue": "Week 5"},
+     "ranks": [poll_rank("BAMA", 1, 1, "4-0", 1600, 40)]},
+]})
+
 write("basketball__mens-college-basketball__scoreboard.json", {"leagues": [{"abbreviation": "NCAAM"}], "events": []})
 
 # ── EPL ──────────────────────────────────────────────────────────────────────
@@ -208,6 +234,79 @@ EPL_SUN = event(
     h={"record": "2-2-2"}, a={"record": "4-0-2"},
 )
 write("soccer__eng.1__scoreboard.json", {"leagues": [{"abbreviation": "EPL"}], "events": [EPL_LIVE, EPL_SAT, EPL_SUN]})
+
+# ── MLB postseason (in progress on 2026-10-02) ──────────────────────────────
+# Postseason games carry season.type 3, the round in notes, and series state.
+for abbr, tid, name, short in [
+    ("NYY", 10, "New York Yankees", "Yankees"), ("BOS", 2, "Boston Red Sox", "Red Sox"),
+    ("DET", 6, "Detroit Tigers", "Tigers"), ("CLE", 5, "Cleveland Guardians", "Guardians"),
+    ("SEA", 12, "Seattle Mariners", "Mariners"), ("LAD", 19, "Los Angeles Dodgers", "Dodgers"),
+    ("CIN", 17, "Cincinnati Reds", "Reds"), ("CHC", 16, "Chicago Cubs", "Cubs"), ("SD", 25, "San Diego Padres", "Padres"),
+]:
+    TEAMS[abbr] = team(tid, name, short, abbr, f"mlb/500/{abbr.lower()}.png")
+# ESPN's placeholders for undecided matchups
+TEAMS["TBD1"] = {"id": "-1", "displayName": "TBD", "shortDisplayName": "TBD", "abbreviation": "TBD"}
+TEAMS["TBD2"] = {"id": "-2", "displayName": "TBD", "shortDisplayName": "TBD", "abbreviation": "TBD"}
+
+
+def post_event(eid, date, home, away, st, note, stage, best_of, wins, summary="", hs=None, as_=None, done=False):
+    """A postseason game. `wins` is each team's series wins after this game, (home, away)."""
+    hw = None if hs is None or st["type"]["state"] != "post" else hs > as_
+    ev = event(eid, date, home, away, st, venue("Ballpark", "City", "ST"), tv=["TBS"],
+               h={"score": hs, "winner": hw}, a={"score": as_, "winner": None if hw is None else not hw})
+    comp = ev["competitions"][0]
+    comp["type"] = {"abbreviation": stage}
+    comp["notes"] = [{"type": "event", "headline": note}]
+    ev["season"] = {"year": 2026, "type": 3}
+    if TEAMS[home]["id"].startswith("-"):  # ESPN sends no series data for TBD matchups
+        return ev
+    comp["series"] = {"type": "playoff", "summary": summary, "completed": done, "totalCompetitions": best_of,
+                      "competitors": [{"id": TEAMS[home]["id"], "wins": wins[0]}, {"id": TEAMS[away]["id"], "wins": wins[1]}]}
+    return ev
+
+
+FINAL_MLB = lambda: status("post", "Final", "STATUS_FINAL")  # noqa: E731
+MLB_POST = [
+    # ALWC: DET sweeps CLE
+    post_event("401800001", "2026-09-29T17:00Z", "CLE", "DET", FINAL_MLB(), "ALWC - Game 1", "RD16", 3, (0, 1), "DET leads series 1-0", 2, 5),
+    post_event("401800002", "2026-09-30T17:00Z", "CLE", "DET", FINAL_MLB(), "ALWC - Game 2", "RD16", 3, (0, 2), "DET wins series 2-0", 1, 3, done=True),
+    # ...so ESPN's still-listed game 3 never happens and must not show
+    post_event("401800003", "2026-10-01T17:00Z", "CLE", "DET", status("pre", "Thu, Oct 1"),
+               "ALWC - Game 3 If Necessary", "RD16", 3, (0, 2), "DET wins series 2-0", done=True),
+    # NLWC: CHC v SD tied 1-1, game 3 live
+    post_event("401800011", "2026-09-29T23:00Z", "CHC", "SD", FINAL_MLB(), "NLWC - Game 1", "RD16", 3, (1, 0), "CHC lead series 1-0", 4, 1),
+    post_event("401800012", "2026-09-30T23:00Z", "CHC", "SD", FINAL_MLB(), "NLWC - Game 2", "RD16", 3, (1, 1), "Series tied 1-1", 0, 3),
+    post_event("401800013", "2026-10-02T23:00Z", "CHC", "SD", status("in", "Top 7th", "STATUS_IN_PROGRESS", 7),
+               "NLWC - Game 3", "RD16", 3, (1, 1), "Series tied 1-1", 2, 2),
+    # ALDS game 1 is scheduled; the other side of the bracket is still to be decided
+    post_event("401800021", "2026-10-04T20:00Z", "SEA", "DET", status("pre", "Sat, October 4th at 4:08 PM EDT"),
+               "ALDS - Game 1", "QTR", 5, (0, 0)),
+    # NLDS: LAD waits for the CHC/SD winner
+    post_event("401800031", "2026-10-04T23:00Z", "LAD", "TBD1", status("pre", "Sat, Oct 4"), "NLDS - Game 1", "QTR", 5, (0, 0)),
+    post_event("401800032", "2026-10-05T23:00Z", "LAD", "TBD1", status("pre", "Sun, Oct 5"), "NLDS - Game 2", "QTR", 5, (0, 0)),
+    # Later rounds are on the schedule with no teams yet
+    post_event("401800041", "2026-10-12T23:00Z", "TBD1", "TBD2", status("pre", "TBD"), "ALCS - Game 1", "SEMI", 7, (0, 0)),
+    post_event("401800047", "2026-10-20T23:00Z", "TBD1", "TBD2", status("pre", "TBD"), "ALCS - Game 7 If Necessary", "SEMI", 7, (0, 0)),
+    post_event("401800051", "2026-10-23T23:00Z", "TBD1", "TBD2", status("pre", "TBD"), "World Series - Game 1", "FINAL", 7, (0, 0)),
+    post_event("401800056", "2026-10-30T23:00Z", "TBD1", "TBD2", status("pre", "TBD"),
+               "World Series - Game 6 If Necessary", "FINAL", 7, (0, 0)),
+    # An exhibition ESPN files under the postseason: never part of the bracket
+    post_event("401800099", "2026-10-03T00:00Z", "LAD", "CIN", status("pre", "Sat, Oct 3"), "MLB All-Star Exhibition", "STD", 1, (0, 0)),
+]
+write("baseball__mlb__scoreboard.json", {
+    "leagues": [{"abbreviation": "MLB", "season": {"year": 2026, "type": {"type": 3, "name": "Postseason"}}}],
+    "events": MLB_POST,
+})
+# Core API season type: when the postseason runs.
+write("baseball__leagues__mlb__seasons__2026__types__3.json",
+      {"name": "Postseason", "startDate": "2026-09-29T07:00Z", "endDate": "2026-11-12T07:59Z"})
+
+# ── NHL: preseason, so the Playoffs page shows last season's (empty here) ─────
+write("hockey__nhl__scoreboard.json", {"leagues": [{"abbreviation": "NHL", "season": {"year": 2027, "type": {"type": 1}}}], "events": []})
+write("hockey__leagues__nhl__seasons__2027__types__3.json",
+      {"name": "Postseason", "startDate": "2027-04-11T07:00Z", "endDate": "2027-07-01T06:59Z"})
+write("hockey__leagues__nhl__seasons__2026__types__3.json",
+      {"name": "Postseason", "startDate": "2026-04-18T07:00Z", "endDate": "2026-07-01T06:59Z"})
 
 # ── Golf ─────────────────────────────────────────────────────────────────────
 def golfer(order, name, pos, score, rounds, thru="", today=""):
@@ -265,7 +364,7 @@ def nfl_entry(abbr, w, l, pf, pa, div, strk):
     ]}
 
 
-write("football__nfl__standings.json", {"children": [
+write("football__nfl__standings.json", {"name": "National Football League", "children": [
     {"name": "National Football Conference", "children": [
         {"name": "NFC East", "standings": {"entries": [
             nfl_entry("PHI", 3, 1, 101, 74, "1-0", "L1"), nfl_entry("DAL", 3, 1, 109, 88, "1-0", "W2"),
@@ -446,6 +545,15 @@ write("football__college-football__teams__258__schedule.json", {"team": TEAMS["U
     sched_event("401755160", "2026-10-17T16:00Z", "LOU", "UVA", status("pre", "Sat, Oct 17"), venue("L&N Federal Credit Union Stadium", "Louisville", "KY"), "ESPN2"),
     sched_event("401755190", "2026-11-28T17:00Z", "VT", "UVA", status("pre", "Sat, Nov 28"), venue("Lane Stadium", "Blacksburg", "VA")),
 ]})
+# A team that isn't in config.yaml, for the team page. The live feed's team block also
+# carries color and standingSummary.
+write("football__college-football__teams__61__schedule.json", {
+    "team": {**TEAMS["UGA"], "color": "ba0c2f", "standingSummary": "1st in SEC"},
+    "events": [
+        sched_event("401755111", "2026-09-19T19:30Z", "UGA", "DUKE", FINAL(), venue("Sanford Stadium", "Athens", "GA"), "SEC Network", 38, 10, True),
+        sched_event("401755150", "2026-10-03T23:30Z", "BAMA", "UGA", status("pre", "Sat, Oct 3"), venue("Bryant-Denny Stadium", "Tuscaloosa", "AL"), "ABC"),
+    ],
+})
 write("basketball__mens-college-basketball__teams__258__schedule.json", {"team": TEAMS["UVA"], "events": [
     sched_event("401820001", "2026-11-03T23:00Z", "UVA", "COAST", status("pre", "Tue, Nov 3"), venue("John Paul Jones Arena", "Charlottesville", "VA"), "ACCNX"),
     sched_event("401820010", "2026-11-10T00:00Z", "UVA", "DUKE", status("pre", "Mon, Nov 9"), venue("John Paul Jones Arena", "Charlottesville", "VA"), "ESPN"),

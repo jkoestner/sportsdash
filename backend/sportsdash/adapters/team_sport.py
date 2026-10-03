@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from .. import espn
 from ..config import LeagueConfig
-from ..models import Game, GameDetail, Odds, Play, PlayerTable, StandingsGroup
-from .parse import g, parse_competition, parse_event, parse_odds, parse_standings
+from ..models import Game, GameDetail, Odds, Play, PlayerTable, Playoffs, Poll, StandingsGroup
+from .parse import g, parse_competition, parse_date, parse_event, parse_odds, parse_poll, parse_standings
+from .playoffs import build_bracket, pad_bracket
 
 SOCCER_EVENT_WORDS = ("goal", "card", "penalty")
 
@@ -18,6 +19,7 @@ SOCCER_EVENT_WORDS = ("goal", "card", "penalty")
 #   * `limit` is capped at 500; anything higher silently falls back to 25 events
 SCOREBOARD_LIMIT = 500
 MAX_DAYS = 31
+PLAYOFF_MAX_DAYS = 92  # NHL/NBA playoffs run about ten weeks; ESPN's windows add a few spare days
 
 # Separate pool from data.py's so per-day fetches never wait behind league fetches.
 _day_pool = ThreadPoolExecutor(max_workers=8, thread_name_prefix="espn-day")
@@ -46,9 +48,12 @@ class TeamSportAdapter:
         return f"{espn.SITE}/{self.cfg.sport}/{self.cfg.league}"
 
     # ── scores / schedule ───────────────────────────────────────────────────
-    def scoreboard_day(self, day: date) -> list[Game]:
+    def _scoreboard_data(self, day: date) -> dict:
         params = {**self.cfg.params, "dates": day.strftime("%Y%m%d"), "limit": SCOREBOARD_LIMIT}
-        data = self.client.get(f"{self.base}/scoreboard", params, ttl=_day_ttl(day))
+        return self.client.get(f"{self.base}/scoreboard", params, ttl=_day_ttl(day))
+
+    def scoreboard_day(self, day: date) -> list[Game]:
+        data = self._scoreboard_data(day)
         return [gm for ev in data.get("events") or [] if (gm := parse_event(ev, self.cfg.key))]
 
     def games(self, start: date, end: date) -> list[Game]:
@@ -59,17 +64,97 @@ class TeamSportAdapter:
         for day_games in _day_pool.map(self.scoreboard_day, days):
             for gm in day_games:
                 merged[gm.id] = gm  # a game near midnight UTC can show on two days
-        return sorted(merged.values(), key=lambda gm: (gm.start is None, gm.start))
+        games = sorted(merged.values(), key=lambda gm: (gm.start is None, gm.start))
+        return self.apply_poll(games)
+
+    def _schedule_data(self, team_id: str) -> dict:
+        return self.client.get(f"{self.base}/teams/{team_id}/schedule", ttl=espn.TTL_SCHEDULE)
 
     def team_schedule(self, team_id: str) -> list[Game]:
-        data = self.client.get(f"{self.base}/teams/{team_id}/schedule", ttl=espn.TTL_SCHEDULE)
+        data = self._schedule_data(team_id)
         games = [gm for ev in data.get("events") or [] if (gm := parse_event(ev, self.cfg.key))]
-        return sorted(games, key=lambda gm: (gm.start is None, gm.start))
+        return self.apply_poll(sorted(games, key=lambda gm: (gm.start is None, gm.start)))
+
+    def team_info(self, team_id: str) -> dict:
+        """ESPN's team block from the schedule feed: displayName, abbreviation, logo, color,
+        standingSummary ("3rd in ACC")... Empty if ESPN doesn't know the team."""
+        return self._schedule_data(team_id).get("team") or {}
+
+    # ── rankings ────────────────────────────────────────────────────────────
+    def poll(self) -> Poll | None:
+        """The configured poll (e.g. AP Top 25), or None if the league has none."""
+        if not self.cfg.rankings:
+            return None
+        data = self.client.get(f"{self.base}/rankings", ttl=espn.TTL_STANDINGS)
+        return parse_poll(data, self.cfg.rankings)
+
+    def apply_poll(self, games: list[Game]) -> list[Game]:
+        """Use the configured poll's ranks instead of ESPN's curatedRank.
+
+        curatedRank switches from AP to the CFP rankings once those come out in November.
+        Only games after the poll was released are re-ranked: older games keep the rank
+        each team had at the time.
+        """
+        poll = self.poll()
+        if not poll or not poll.entries:
+            return games  # poll unavailable: ESPN's own ranks are the best we have
+        ranks = poll.ranks()
+        for gm in games:
+            if poll.date and gm.start and gm.start < poll.date:
+                continue
+            gm.home.rank = ranks.get(gm.home.id)
+            gm.away.rank = ranks.get(gm.away.id)
+        return games
+
+    # ── playoffs ────────────────────────────────────────────────────────────
+    def _postseason_window(self, year: int) -> tuple[datetime, datetime] | None:
+        url = f"{espn.CORE}/{self.cfg.sport}/leagues/{self.cfg.league}/seasons/{year}/types/3"
+        data = self.client.get(url, ttl=espn.TTL_STANDINGS)
+        start, end = parse_date(data.get("startDate")), parse_date(data.get("endDate"))
+        return (start, end) if start and end else None
+
+    def playoffs(self, today: date) -> Playoffs | None:
+        """This season's postseason bracket, or last season's if this one hasn't started.
+
+        None when ESPN has no postseason for the league. The scoreboard can't be queried by
+        date range or season type, so this fetches every day of the postseason (cached).
+        """
+        season = g(self._scoreboard_data(today), "leagues", 0, "season", "year")
+        year = int(season) if season else today.year
+        window = self._postseason_window(year)
+        if window is None:
+            return None
+        next_start = None
+        if window[0].date() > today:
+            next_start = window[0]
+            previous = self._postseason_window(year - 1)
+            if previous is None:
+                return Playoffs(league=self.cfg.key, season=year, start=window[0], end=window[1], next_start=next_start)
+            year, window = year - 1, previous
+
+        first = window[0].date()
+        last = window[1].date()  # through the final: ESPN lists future games with TBD teams
+        days = [first + timedelta(days=i) for i in range(min((last - first).days + 1, PLAYOFF_MAX_DAYS))]
+        events: dict[str, dict] = {}
+        for data in _day_pool.map(self._scoreboard_data, days):
+            for ev in data.get("events") or []:
+                if g(ev, "season", "type") == 3 and ev.get("id"):
+                    events[str(ev["id"])] = ev
+        stages, other = build_bracket(list(events.values()), self.cfg.key, self.cfg.playoffs_match)
+        if next_start is None:  # this season's bracket: draw the rounds still to come
+            stages = pad_bracket(stages, self.cfg.playoffs_rounds)
+        return Playoffs(
+            league=self.cfg.key, season=year, start=window[0], end=window[1],
+            stages=stages, other=other, next_start=next_start,
+        )
 
     # ── standings ───────────────────────────────────────────────────────────
     def standings(self) -> list[StandingsGroup]:
         url = f"{espn.V2}/{self.cfg.sport}/{self.cfg.league}/standings"
-        data = self.client.get(url, ttl=espn.TTL_STANDINGS)
+        # level=3 splits conferences into divisions (NFL, NHL, MLB...); leagues without
+        # divisions come back unchanged.
+        params = {"level": 3, **self.cfg.standings_params}
+        data = self.client.get(url, params, ttl=espn.TTL_STANDINGS)
         return parse_standings(data, self.cfg.standings_columns)
 
     # ── game detail ─────────────────────────────────────────────────────────
@@ -85,6 +170,7 @@ class TeamSportAdapter:
         game = parse_competition({"id": g(data, "header", "id", default=event_id)}, comp, self.cfg.key)
         if game is None:
             return None
+        self.apply_poll([game])
 
         info = data.get("gameInfo") or {}
         venue = info.get("venue") or {}

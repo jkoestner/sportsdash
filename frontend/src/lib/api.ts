@@ -9,6 +9,8 @@ import { queryOptions } from "@tanstack/react-query";
 import type {
   AppConfig,
   GameDetail,
+  Playoffs,
+  Poll,
   ScheduleResponse,
   ScoresResponse,
   StandingsResponse,
@@ -75,6 +77,28 @@ export const teamsQuery = () =>
     queryKey: ["teams"],
     queryFn: () => get<TeamPanel[]>("/api/teams"),
     staleTime: 5 * MINUTE,
+  });
+
+export const teamQuery = (league: string, id: string) =>
+  queryOptions({
+    queryKey: ["team", league, id],
+    queryFn: () => get<TeamPanel>(`/api/team/${league}/${id}`),
+    staleTime: 5 * MINUTE,
+    retry: (count, err) => !(err instanceof ApiError && err.status === 404) && count < 2,
+  });
+
+export const rankingsQuery = (league: string) =>
+  queryOptions({
+    queryKey: ["rankings", league],
+    queryFn: () => get<Poll | null>(`/api/rankings/${league}`),
+    staleTime: 30 * MINUTE,
+  });
+
+export const playoffsQuery = (league: string) =>
+  queryOptions({
+    queryKey: ["playoffs", league],
+    queryFn: () => get<Playoffs | null>(`/api/playoffs/${league}`),
+    staleTime: 60_000,
   });
 
 export const gameQuery = (league: string, id: string) =>

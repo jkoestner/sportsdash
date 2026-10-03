@@ -1,8 +1,9 @@
 """Small cached client for ESPN's public (unofficial, keyless) JSON endpoints.
 
-Two bases are used:
-  * site API  -> scoreboard, summary, team schedule
+Three bases are used:
+  * site API  -> scoreboard, summary, team schedule, rankings
   * v2 API    -> standings (the site API's standings route returns a stub)
+  * core API  -> season types, for when the postseason starts and ends
 
 Set SPORTSDASH_FIXTURES=/path/to/dir to serve responses from JSON files instead
 of the network (used by the tests and for offline development).
@@ -24,6 +25,7 @@ log = logging.getLogger(__name__)
 
 SITE = "https://site.api.espn.com/apis/site/v2/sports"
 V2 = "https://site.api.espn.com/apis/v2/sports"
+CORE = "https://sports.core.api.espn.com/v2/sports"  # season calendars (postseason dates)
 
 # Cache lifetimes (seconds)
 TTL_LIVE = 30

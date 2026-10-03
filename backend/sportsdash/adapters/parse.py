@@ -9,7 +9,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from ..models import Game, Odds, StandingsGroup, StandingsRow, Team
+from ..models import Game, Odds, Poll, PollEntry, StandingsGroup, StandingsRow, Team
 
 
 def g(obj: Any, *path, default=None):
@@ -184,19 +184,21 @@ def _stat_label(stat: dict) -> str:
     return stat.get("abbreviation") or stat.get("shortDisplayName") or stat.get("name") or ""
 
 
-def _flatten_groups(node: dict, out: list[dict]) -> None:
-    """Standings nest conference -> division -> standings.entries; collect leaf groups."""
+def _flatten_groups(node: dict, out: list[tuple[dict, str]], parent: str = "", depth: int = 0) -> None:
+    """Standings nest league -> conference -> division -> standings.entries; collect leaf
+    groups with the name of the group they sit in (never the league itself)."""
     if g(node, "standings", "entries"):
-        out.append(node)
+        out.append((node, parent))
+    name = (node.get("name") or node.get("abbreviation") or "") if depth > 0 else ""
     for child in node.get("children") or []:
-        _flatten_groups(child, out)
+        _flatten_groups(child, out, name, depth + 1)
 
 
 def parse_standings(data: dict, preferred_cols: list[str]) -> list[StandingsGroup]:
-    leaves: list[dict] = []
+    leaves: list[tuple[dict, str]] = []
     _flatten_groups(data, leaves)
     groups: list[StandingsGroup] = []
-    for node in leaves:
+    for node, parent in leaves:
         entries = g(node, "standings", "entries", default=[])
         # Decide columns from the first entry's stats.
         first_stats = entries[0].get("stats", []) if entries else []
@@ -221,5 +223,46 @@ def parse_standings(data: dict, preferred_cols: list[str]) -> list[StandingsGrou
                     values=[stats.get(c, "") for c in cols],
                 )
             )
-        groups.append(StandingsGroup(name=node.get("name") or node.get("abbreviation") or "", columns=cols, rows=rows))
+        name = node.get("name") or node.get("abbreviation") or ""
+        groups.append(StandingsGroup(name=name, columns=cols, rows=rows, parent=parent))
     return groups
+
+
+def _int(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_poll(data: dict, poll_type: str) -> Poll | None:
+    """One poll from the rankings endpoint, picked by its `type` ("ap", "usa", "cfp"...)."""
+    raw = next((r for r in data.get("rankings") or [] if r.get("type") == poll_type), None)
+    if not raw:
+        return None
+    entries = []
+    for r in raw.get("ranks") or []:
+        team = r.get("team") or {}
+        rank = _int(r.get("current"))
+        if not rank or not team.get("id"):
+            continue
+        previous = _int(r.get("previous"))
+        entries.append(
+            PollEntry(
+                rank=rank,
+                team_id=str(team["id"]),
+                team=team.get("nickname") or team.get("location") or team.get("name") or "",
+                abbr=team.get("abbreviation") or "",
+                logo=team.get("logo") or g(team, "logos", 0, "href", default=""),
+                record=r.get("recordSummary") or "",
+                previous=previous if previous and previous > 0 else None,
+                points=_int(r.get("points")),
+                first_place_votes=_int(r.get("firstPlaceVotes")) or 0,
+            )
+        )
+    return Poll(
+        name=raw.get("name") or raw.get("shortName") or "",
+        week=g(raw, "occurrence", "displayValue", default=""),
+        date=parse_date(raw.get("date")),
+        entries=sorted(entries, key=lambda e: e.rank),
+    )

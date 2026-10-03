@@ -6,7 +6,7 @@ import { ErrorBox, Skeleton } from "../components/QueryState";
 import { Empty, Section } from "../components/Section";
 import { scoresQuery } from "../lib/api";
 import { addDays, clock, longDay, monthDay, shortDay, weekday } from "../lib/format";
-import { groupBy, isMyGame, sortLiveFirst } from "../lib/games";
+import { groupBy, isMyGame, isRanked, sortLiveFirst } from "../lib/games";
 import { useSettings } from "../lib/settings";
 import type { ScoresResponse } from "../types";
 
@@ -15,6 +15,9 @@ export function ScoresPage() {
   const [params] = useSearchParams();
   const today = config.today;
   const date = /^\d{4}-\d{2}-\d{2}$/.test(params.get("date") ?? "") ? params.get("date")! : today;
+  const top25 = params.get("top25") === "1";
+  // Leagues with a poll (config.yaml `rankings:`). The Top 25 filter only narrows these.
+  const polled = enabled.filter((l) => l.rankings);
 
   // Only auto-refresh days that can have live games.
   const live = date === today || date === addDays(today, -1);
@@ -26,7 +29,7 @@ export function ScoresPage() {
 
   return (
     <div>
-      <DayStrip today={today} selected={date} />
+      <DayStrip today={today} selected={date} top25={top25} />
       <div className="title-row">
         <h1 className="page-title">{longDay(date)}</h1>
         {query.data && (
@@ -35,6 +38,13 @@ export function ScoresPage() {
           </span>
         )}
       </div>
+      {polled.length > 0 && (
+        <div className="controls">
+          <Link to={scoresHref(date, today, !top25)} className={`seg toggle${top25 ? " active" : ""}`} aria-pressed={top25}>
+            {`${polled.map((l) => l.name).join(" / ")} Top 25 only`}
+          </Link>
+        </div>
+      )}
 
       {query.isPending ? (
         <Skeleton rows={4} />
@@ -42,14 +52,27 @@ export function ScoresPage() {
         <ErrorBox error={query.error} retry={() => query.refetch()} />
       ) : (
         <div className={query.isPlaceholderData ? "stale" : undefined}>
-          <ScoresBody data={query.data} enabled={enabled.map((l) => l.key)} date={date} />
+          <ScoresBody
+            data={query.data}
+            enabled={enabled.map((l) => l.key)}
+            date={date}
+            top25={top25 ? polled.map((l) => l.key) : []}
+          />
         </div>
       )}
     </div>
   );
 }
 
-function DayStrip({ today, selected }: { today: string; selected: string }) {
+function scoresHref(date: string, today: string, top25: boolean): string {
+  const q = new URLSearchParams();
+  if (date !== today) q.set("date", date);
+  if (top25) q.set("top25", "1");
+  const qs = q.toString();
+  return qs ? `/?${qs}` : "/";
+}
+
+function DayStrip({ today, selected, top25 }: { today: string; selected: string; top25: boolean }) {
   const queryClient = useQueryClient();
   const days = Array.from({ length: 8 }, (_, i) => addDays(today, i - 2));
   return (
@@ -57,7 +80,7 @@ function DayStrip({ today, selected }: { today: string; selected: string }) {
       {days.map((d) => (
         <Link
           key={d}
-          to={d === today ? "/" : `/?date=${d}`}
+          to={scoresHref(d, today, top25)}
           className={`day${d === selected ? " active" : ""}`}
           aria-current={d === selected ? "date" : undefined}
           // Start loading on hover so the click feels instant.
@@ -76,17 +99,20 @@ function ScoresBody({
   data,
   enabled,
   date,
+  top25,
 }: {
   data: ScoresResponse;
   enabled: string[];
   date: string;
+  top25: string[]; // leagues narrowed to games with a ranked team
 }) {
   const { config } = useSettings();
   const games = data.games.filter((g) => enabled.includes(g.league));
+  // Your teams stay pinned even when they're unranked.
   const mine = sortLiveFirst(games.filter((g) => isMyGame(g, config.teams)));
   const mineIds = new Set(mine.map((g) => g.id));
   const byLeague = groupBy(
-    games.filter((g) => !mineIds.has(g.id)),
+    games.filter((g) => !mineIds.has(g.id) && (!top25.includes(g.league) || isRanked(g))),
     (g) => g.league,
   );
   const tours = groupBy(data.tournaments, (t) => t.league);
@@ -110,12 +136,13 @@ function ScoresBody({
         );
       }
       const list = byLeague.get(lg.key) ?? [];
+      const title = top25.includes(lg.key) ? `${lg.name} Top 25` : lg.name;
       if (!list.length) {
-        if (!mine.some((g) => g.league === lg.key)) quiet.push(lg.name);
+        if (!mine.some((g) => g.league === lg.key)) quiet.push(title);
         return null;
       }
       return (
-        <Section key={lg.key} title={lg.name} count={list.length}>
+        <Section key={lg.key} title={title} count={list.length}>
           {sortLiveFirst(list).map((g) => (
             <GameRow key={g.id} game={g} />
           ))}

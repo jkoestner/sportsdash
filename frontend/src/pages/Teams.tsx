@@ -40,8 +40,10 @@ export function TeamsPage() {
   );
 }
 
-function TeamCard({ panel }: { panel: TeamPanel }) {
-  const { team, league, next_game, next_odds, record, games } = panel;
+/** A team's next game (with every book's line) and its season. Also the body of the single-team page. */
+export function TeamCard({ panel, showLogo }: { panel: TeamPanel; showLogo?: boolean }) {
+  const { team, league, next_game, next_odds, record, games, rank, standing } = panel;
+  const ranked = rank ? `${(league.rankings || "").toUpperCase()} No. ${rank}`.trim() : "";
   // Fall back to the first book's line when the scoreboard didn't include one.
   const next: Game | null =
     next_game && !hasLines(next_game.odds) && next_odds[0] ? { ...next_game, odds: next_odds[0] } : next_game;
@@ -50,10 +52,10 @@ function TeamCard({ panel }: { panel: TeamPanel }) {
     // A CSS custom property set inline lets the stylesheet use each team's color.
     <section className="team-panel block" style={{ "--team": team.color } as CSSProperties}>
       <div className="tp-head">
-        <span className="tp-short">{team.short}</span>
+        {showLogo ? <Logo src={panel.logo} abbr={team.short} size="lg" /> : <span className="tp-short">{team.short}</span>}
         <div>
           <h2>{team.name}</h2>
-          <div className="tp-sub">{[league.name, record].filter(Boolean).join(", ")}</div>
+          <div className="tp-sub">{[league.name, record, standing, ranked].filter(Boolean).join(", ")}</div>
         </div>
       </div>
 
@@ -84,6 +86,7 @@ function SeasonRow({ game, teamId }: { game: Game; teamId: string }) {
       <span className="ts-matchup">
         <span className="ts-at">{home ? "vs" : "at"}</span>
         <Logo src={opp.logo} abbr={opp.abbr} size="sm" />
+        {opp.rank && <span className="rank">{opp.rank}</span>}
         <span className="ts-opp">{opp.short || opp.name}</span>
       </span>
       {won === null ? (
