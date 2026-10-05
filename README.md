@@ -1,5 +1,7 @@
 # sportsdash
 
+[![Proudly Vibe Coded](https://vibecoded.fyi/badges/flat/main/proudly-vibe-coded.svg)](https://vibecoded.fyi/)
+
 A self-hosted scores, schedule and standings dashboard. It runs a React +
 TypeScript frontend (Vite) on top of a small Python API (FastAPI).
 
@@ -10,6 +12,27 @@ box score.
 
 Data comes from ESPN's public JSON feeds (no API key). They're unofficial and
 change without notice; see [ESPN quirks](#espn-quirks).
+
+## Screenshots
+
+**Scores**: your teams pinned on top, then every league, live games first.
+
+![Scores page](docs/screenshots/scores.png)
+
+**Game**: live down, distance and field position, linescore, win probability,
+team and player stats (tabbed by team), game info and betting lines.
+
+![Live game page](docs/screenshots/game.png)
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/standings.png" alt="Standings page"><br><b>Standings</b></td>
+    <td><img src="docs/screenshots/playoffs.png" alt="Playoffs page"><br><b>Playoffs</b></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/teams.png" alt="Your teams page" width="50%"><br><b>Your teams</b></td>
+  </tr>
+</table>
 
 ```
 sportsdash/
@@ -92,54 +115,11 @@ cd frontend; npm run build                 # type-check + production build
 | `/playoffs?league=mlb` | The postseason bracket: one column per round, each series with its games, drawn out to the final with TBD teams for rounds not yet decided. This week's playoff games on top; bowls and other non-bracket games below. Before a league's playoffs start, shows last season's. |
 | `/teams` | Each team's next game with lines from every sportsbook, plus its full season. |
 | `/team/ncaaf/61` | The same card for any team. Click a team on a game page, in the poll or in standings. |
-| `/game/nfl/401772001` | Scoreboard, linescore, win probability, team stats, scoring plays, player stats, game info, betting lines. |
+| `/game/nfl/401772001` | Scoreboard, live situation for football (who has the ball, down and distance, field position, current drive, last play), linescore, win probability, team stats, scoring plays, player stats in a tab per team, game info, betting lines. |
 | `/golf/pga/401703510` | Full leaderboard. |
 
 The league chips in the header filter every page and are remembered in the browser.
 "Select all" / "Deselect all" next to them flip every league at once.
-
-## Learning React with this codebase
-
-Read the frontend in this order. Each step introduces one or two ideas.
-
-1. **`src/types.ts`**: TypeScript interfaces describing exactly what the API
-   returns. Hover any variable in VS Code to see its type; misspell a field and
-   the editor flags it before you run anything.
-2. **`src/lib/format.ts`, `src/lib/games.ts`**: plain functions, no React. This
-   is where logic belongs whenever possible, because it's easy to test (see
-   `*.test.ts` next to them).
-3. **`src/components/Logo.tsx`**: the smallest real component. It covers props
-   (`src`, `abbr`, `size`), state (`useState`), and events (`onLoad`, `onError`).
-   When state changes, React re-renders the component.
-4. **`src/components/GameRow.tsx`**: composition. Components render other
-   components (`<Logo>`, `<OddsLines>`), and JSX is just JavaScript, so
-   `{cond && <X/>}` and `.map()` replace template `if`/`for`.
-5. **`src/lib/settings.tsx`**: React context. This is shared state (config,
-   enabled leagues) that any component reads with `useSettings()` instead of
-   passing props down five levels. It also shows `useMemo` and `localStorage`.
-6. **`src/lib/api.ts` + `src/pages/Scores.tsx`**: data fetching with
-   **TanStack Query**. `useQuery(scoresQuery(date))` handles loading, errors,
-   caching, background refresh (`refetchInterval`) and keeping the old day on
-   screen while the new one loads (`placeholderData`). Hovering a day in the
-   strip calls `prefetchQuery`, which is why clicks feel instant.
-7. **`src/App.tsx`**: routing with **React Router**. `<Routes>` maps URLs to
-   pages, `<Outlet>` is where the matched page renders, `<NavLink>` highlights
-   the current section, and `useSearchParams`/`useParams` read the URL.
-8. **`src/components/WinProbChart.tsx`**: an interactive chart in plain SVG with
-   pointer events, no chart library.
-
-Things to try:
-
-- Add a "Yesterday's finals for your teams" strip at the top of Scores. It needs
-  only `games.ts` helpers and one more `useQuery`.
-- Show the spread result (covered / didn't cover) on finished games in
-  `TeamsPage`. The data is already in `game.odds`.
-- Install the React DevTools browser extension, open the Components tab, and
-  watch which components re-render when you toggle a league chip.
-
-Library versions: React 19, React Router 7, TanStack Query 5, Vite 8,
-TypeScript 5.9. TypeScript 7 (the new native compiler) exists, but most
-tutorials and tooling still target 5.x.
 
 ## Configure leagues and teams
 

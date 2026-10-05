@@ -196,6 +196,19 @@ class Play:
 
 
 @dataclass
+class Situation:
+    """Live football state: who has the ball, where, and the down."""
+    possession: str = ""  # team id with the ball
+    down_distance: str = ""  # "3rd & 16 at MIN 42"
+    short_down_distance: str = ""  # "3rd & 16"
+    yards_to_endzone: int | None = None  # for the team with the ball
+    distance: int | None = None  # yards to go for a first down
+    red_zone: bool = False
+    drive: str = ""  # "6 plays, 48 yards, 3:12"
+    last_play: str = ""
+
+
+@dataclass
 class GameDetail:
     game: Game
     team_stats: list[tuple[str, str, str]] = field(default_factory=list)  # label, away, home
@@ -206,3 +219,4 @@ class GameDetail:
     weather: str = ""
     win_prob: list[float] = field(default_factory=list)  # home win %, 0-100, per play
     officials: list[str] = field(default_factory=list)
+    situation: Situation | None = None  # live football games only

@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { Logo } from "../components/Logo";
 import { OddsByBook } from "../components/Odds";
@@ -9,7 +10,7 @@ import { gameQuery, teamQuery } from "../lib/api";
 import { clock, localDay, shortDay } from "../lib/format";
 import { isMyTeam, location } from "../lib/games";
 import { useSettings } from "../lib/settings";
-import type { Game, GameDetail, Team } from "../types";
+import type { Game, GameDetail, PlayerTable, Situation, Team } from "../types";
 
 export function GamePage() {
   const { league = "", id = "" } = useParams();
@@ -64,6 +65,7 @@ function GameView({ detail }: { detail: GameDetail }) {
     <div>
       <BackLink day={day} />
       <Scoreboard game={g} />
+      {g.state === "in" && detail.situation && <LiveSituation situation={detail.situation} game={g} />}
       <Linescore game={g} sport={sport} />
 
       <div className="detail-grid">
@@ -112,31 +114,7 @@ function GameView({ detail }: { detail: GameDetail }) {
             </Section>
           )}
 
-          {detail.player_tables.map((t, ti) => (
-            <Section key={`${t.team}-${t.title}-${ti}`} title={t.team && !t.title.includes(" ") ? `${t.team} ${t.title}` : t.title}>
-              <div className="table-wrap">
-                <table className="stats">
-                  <thead>
-                    <tr>
-                      <th>Player</th>
-                      {t.labels.map((l) => (
-                        <th key={l}>{l}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {t.rows.map((r, ri) => (
-                      <tr key={ri}>
-                        {r.map((v, j) => (
-                          <td key={j}>{v}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Section>
-          ))}
+          {detail.player_tables.length > 0 && <PlayerStats tables={detail.player_tables} game={g} />}
 
           {!detail.team_stats.length && !detail.plays.length && !detail.player_tables.length && (
             <section className="block">
@@ -209,6 +187,146 @@ function BigTeam({ team, game, side }: { team: Team; game: Game; side: "home" | 
         {game.state !== "pre" ? team.score : ""}
       </div>
     </div>
+  );
+}
+
+/** Down, distance and ball spot, drawn on a field with the away end zone on the left. */
+function LiveSituation({ situation: s, game }: { situation: Situation; game: Game }) {
+  const offense = s.possession === game.home.id ? game.home : s.possession === game.away.id ? game.away : null;
+  const ytg = s.yards_to_endzone;
+  // Home drives toward the left end zone, away toward the right. x is 0-100 from the left goal line.
+  const toLeft = offense === game.home;
+  const ball = offense && ytg !== null ? (toLeft ? ytg : 100 - ytg) : null;
+  const goalToGo = s.distance !== null && ytg !== null && s.distance >= ytg;
+  const firstDown = ball !== null && s.distance !== null && !goalToGo ? (toLeft ? ball - s.distance : ball + s.distance) : null;
+  const spot = s.down_distance.split(" at ")[1] ?? "";
+
+  return (
+    <section className={`block situation${s.red_zone ? " red-zone" : ""}`} aria-label="Game situation">
+      <div className="sit-head">
+        {offense && (
+          <div className="sit-poss">
+            <Logo src={offense.logo} abbr={offense.abbr} />
+            <span>
+              <strong>{offense.abbr}</strong> ball
+            </span>
+          </div>
+        )}
+        {s.short_down_distance && (
+          <div className="sit-down">
+            {goalToGo ? s.short_down_distance.replace(/& \d+$/, "& Goal") : s.short_down_distance}
+            {spot && <span className="sit-spot"> at {spot}</span>}
+          </div>
+        )}
+        {s.red_zone && <span className="sit-badge">Red zone</span>}
+      </div>
+
+      <div className="field" role="img" aria-label={s.down_distance || "Field position"}>
+        <div className="endzone">{game.away.abbr}</div>
+        <div className="field-play">
+          {[10, 20, 30, 40, 50, 60, 70, 80, 90].map((x) => (
+            <span key={x} className="yard" style={{ left: `${x}%` }}>
+              <span className="yard-num">{x <= 50 ? x : 100 - x}</span>
+            </span>
+          ))}
+          {firstDown !== null && firstDown > 0 && firstDown < 100 && (
+            <span className="first-down" style={{ left: `${firstDown}%` }} />
+          )}
+          {ball !== null && (
+            <span className="ball" style={{ left: `${ball}%` }}>
+              {toLeft ? "◀" : "▶"}
+            </span>
+          )}
+        </div>
+        <div className="endzone">{game.home.abbr}</div>
+      </div>
+
+      {(s.drive || s.last_play) && (
+        <dl className="info sit-info">
+          {s.drive && (
+            <div className="info-row">
+              <dt>Drive</dt>
+              <dd>{s.drive}</dd>
+            </div>
+          )}
+          {s.last_play && (
+            <div className="info-row">
+              <dt>Last play</dt>
+              <dd>{s.last_play}</dd>
+            </div>
+          )}
+        </dl>
+      )}
+    </section>
+  );
+}
+
+/** Box score tables, one tab per team so you don't scroll past one team to reach the other. */
+function PlayerStats({ tables, game }: { tables: PlayerTable[]; game: Game }) {
+  const { config } = useSettings();
+  const byTeam = new Map<string, PlayerTable[]>();
+  for (const t of tables) byTeam.set(t.team, [...(byTeam.get(t.team) ?? []), t]);
+  const teamFor = (key: string) => [game.away, game.home].find((t) => t.abbr === key || t.name === key);
+  const keys = [...byTeam.keys()].sort((a, b) => (teamFor(a) === game.home ? 1 : 0) - (teamFor(b) === game.home ? 1 : 0));
+  const mine = keys.find((k) => {
+    const t = teamFor(k);
+    return t && isMyTeam(t, game.league, config.teams);
+  });
+  const [picked, setPicked] = useState<string | null>(null);
+  const active = picked && byTeam.has(picked) ? picked : (mine ?? keys[0]);
+
+  return (
+    <section className="block">
+      <div className="sec-head">
+        <h2>Player stats</h2>
+      </div>
+      <div className="team-tabs" role="tablist">
+        {keys.map((k) => {
+          const t = teamFor(k);
+          return (
+            <button
+              key={k}
+              type="button"
+              role="tab"
+              aria-selected={k === active}
+              className={`team-tab${k === active ? " active" : ""}`}
+              onClick={() => setPicked(k)}
+            >
+              {t && <Logo src={t.logo} abbr={t.abbr} size="sm" />}
+              {t?.short || k}
+            </button>
+          );
+        })}
+      </div>
+      <div role="tabpanel">
+        {(byTeam.get(active ?? "") ?? []).map((t, ti) => (
+          <div key={`${t.title}-${ti}`} className="box-group">
+            <h3>{t.title}</h3>
+            <div className="table-wrap">
+              <table className="stats">
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    {t.labels.map((l) => (
+                      <th key={l}>{l}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.rows.map((r, ri) => (
+                    <tr key={ri}>
+                      {r.map((v, j) => (
+                        <td key={j}>{v}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

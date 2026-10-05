@@ -202,3 +202,28 @@ def test_real_shapes_status_text_and_team_golf():
     t = _tournament(cup, "pga")
     assert [p.name for p in t.players] == ["USA", "International"]
     assert [p.score for p in t.players] == ["3", "2"]
+
+
+def test_live_football_situation():
+    from sportsdash.adapters.team_sport import _situation, _strip_team
+
+    spot = {"down": 3, "distance": 7, "yardsToEndzone": 18, "downDistanceText": "3rd & 7 at DAL 18",
+            "shortDownDistanceText": "3rd & 7", "team": {"id": "21"}}
+    data = {
+        "header": {"competitions": [{"competitors": [{"id": "6", "possession": False}, {"id": "21", "possession": True}]}]},
+        "drives": {"current": {"description": "8 plays, 57 yards, 4:01", "team": {"id": "21"},
+                               "plays": [{"text": " J.Hurts pass short right to A.Brown for 5 yards.", "end": spot}]}},
+    }
+    sit = _situation(data)
+    assert (sit.possession, sit.down_distance, sit.yards_to_endzone, sit.red_zone) == ("21", "3rd & 7 at DAL 18", 18, True)
+    assert sit.last_play == "J.Hurts pass short right to A.Brown for 5 yards."
+
+    # Kickoff after a score: no down, possession falls back to the play's team.
+    data["header"] = {}
+    data["drives"]["current"]["plays"][0]["end"] = {"down": 0, "team": {"id": "6"}}
+    sit = _situation(data)
+    assert (sit.possession, sit.down_distance, sit.yards_to_endzone) == ("6", "", None)
+    assert _situation({}) is None
+    assert _strip_team("Minnesota Passing", {"displayName": "Minnesota Vikings", "location": "Minnesota"}) == "Passing"
+    assert _strip_team("Passing", {"location": "Minnesota"}) == "Passing"
+    assert sit.drive == ""  # the drive was PHI's, but DAL has the ball

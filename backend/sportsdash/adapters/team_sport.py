@@ -7,7 +7,7 @@ from datetime import date, datetime, timedelta
 
 from .. import espn
 from ..config import LeagueConfig
-from ..models import Game, GameDetail, Odds, Play, PlayerTable, Playoffs, Poll, StandingsGroup
+from ..models import Game, GameDetail, Odds, Play, PlayerTable, Playoffs, Poll, Situation, StandingsGroup
 from .parse import g, parse_competition, parse_date, parse_event, parse_odds, parse_poll, parse_standings
 from .playoffs import build_bracket, pad_bracket
 
@@ -201,6 +201,8 @@ class TeamSportAdapter:
             for p in data.get("winprobability") or []
             if p.get("homeWinPercentage") is not None
         ]
+        if game.state == "in" and self.cfg.sport == "football":
+            detail.situation = _situation(data)
         return detail
 
 
@@ -247,8 +249,55 @@ def _player_tables(data: dict) -> list[PlayerTable]:
                 rows.append([g(a, "athlete", "shortName") or g(a, "athlete", "displayName", default="")] + stats)
             if rows and labels:
                 title = grp.get("text") or (grp.get("name") or "").replace("_", " ").title() or "Players"
+                title = _strip_team(title, team_block.get("team") or {})
                 tables.append(PlayerTable(team=team, title=title, labels=labels, rows=rows, totals=grp.get("totals") or []))
     return tables
+
+
+def _situation(data: dict) -> Situation | None:
+    """Down, distance and ball spot from the summary's drive feed.
+
+    The summary has no `situation` block (only the scoreboard does), but the last
+    play of the current drive ends at the spot of the next snap.
+    """
+    drives = data.get("drives") or {}
+    drive = drives.get("current") or (drives.get("previous") or [None])[-1]
+    if not drive:
+        return None
+    plays = drive.get("plays") or []
+    last = plays[-1] if plays else {}
+    spot = last.get("end") or {}
+
+    possession = next(
+        (str(c.get("id", "")) for c in g(data, "header", "competitions", 0, "competitors", default=[]) if c.get("possession")),
+        "",
+    ) or str(g(spot, "team", "id", default="") or g(drive, "team", "id", default=""))
+
+    to_go = spot.get("yardsToEndzone")
+    drive_team = str(g(drive, "team", "id", default=""))
+    sit = Situation(
+        possession=possession,
+        # After a punt or turnover the "current" drive still belongs to the other team.
+        drive=drive.get("description", "") if drive_team == possession else "",
+        last_play=(last.get("text") or "").strip(),
+    )
+    # A down of 0 means a kickoff, PAT or other untimed snap: no down to show.
+    if spot.get("down") and spot.get("downDistanceText"):
+        sit.down_distance = spot.get("downDistanceText", "")
+        sit.short_down_distance = spot.get("shortDownDistanceText", "")
+        sit.distance = spot.get("distance")
+        if isinstance(to_go, (int, float)) and 0 < to_go < 100:
+            sit.yards_to_endzone = int(to_go)
+            sit.red_zone = to_go <= 20
+    return sit
+
+
+def _strip_team(title: str, team: dict) -> str:
+    """"Minnesota Passing" -> "Passing"; the page already groups tables by team."""
+    for name in (team.get("displayName"), team.get("location"), team.get("shortDisplayName")):
+        if name and title.startswith(name + " "):
+            return title[len(name) + 1:]
+    return title
 
 
 def _period_label(sport: str, number) -> str:

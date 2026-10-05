@@ -256,6 +256,36 @@ th:last-child, td:last-child { padding-right: 16px; }
 .pl-team { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pl-score { font: 600 0.95rem var(--cond); font-variant-numeric: tabular-nums; }
 
+/* live situation (football) */
+.situation { margin: -4px 0 16px; padding: 12px 16px 4px; --field: #2F7D4A; --field-line: rgba(255, 255, 255, 0.45); --first-down: #F2C200; }
+.situation.red-zone { border-color: var(--loss); }
+.sit-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+.sit-poss { display: flex; align-items: center; gap: 8px; font: 500 1.05rem/1 var(--cond); color: var(--muted); }
+.sit-poss strong { color: var(--ink); font-weight: 700; }
+.sit-down { font: 700 1.5rem/1 var(--cond); }
+.sit-spot { font-weight: 500; color: var(--muted); font-size: 1.1rem; }
+.sit-badge { font: 600 0.8rem/1 var(--body); text-transform: uppercase; letter-spacing: 0.05em; color: #fff; background: var(--loss); padding: 4px 8px; border-radius: 4px; }
+.field { display: grid; grid-template-columns: 8% 1fr 8%; height: 46px; border-radius: 6px; overflow: hidden; background: var(--field); }
+.endzone { display: grid; place-items: center; font: 700 0.8rem/1 var(--cond); color: #fff; background: color-mix(in srgb, var(--field) 70%, #000); writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.06em; }
+.field-play { position: relative; border-left: 2px solid var(--field-line); border-right: 2px solid var(--field-line); }
+.yard { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--field-line); }
+.yard-num { position: absolute; bottom: 2px; left: 0; transform: translateX(-50%); font: 600 0.68rem/1 var(--cond); color: rgba(255, 255, 255, 0.75); }
+.first-down { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: var(--first-down); }
+.ball { position: absolute; top: 50%; transform: translate(-50%, -60%); font-size: 1rem; line-height: 1; color: #fff; text-shadow: 0 0 3px #000; }
+.ball::before { content: ""; position: absolute; left: 50%; top: -40%; bottom: -60%; width: 2px; margin-left: -1px; background: #4DA3FF; z-index: -1; }
+.sit-info { padding: 10px 0 10px; }
+@media (prefers-color-scheme: dark) {
+  .situation { --field: #23603A; }
+}
+
+/* player stats, tabbed by team */
+.team-tabs { display: flex; gap: 4px; padding: 0 16px; border-bottom: 1px solid var(--line); overflow-x: auto; overflow-y: hidden; }
+.team-tab { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: none; border: 0; font: 600 1rem/1 var(--cond); color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; }
+.team-tab:hover { color: var(--ink); }
+.team-tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+.team-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+.box-group h3 { font: 600 0.95rem/1 var(--cond); color: var(--muted); margin: 14px 16px 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+
 /* ── your teams ─────────────────────────────────────────────────────── */
 .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 16px; }
 .team-panel { margin: 0; }

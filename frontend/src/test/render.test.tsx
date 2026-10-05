@@ -164,3 +164,28 @@ it("standings label each conference once, above its divisions", () => {
   expect(html.match(/class="conf-head"/g)).toHaveLength(2);
   expect(html.indexOf("NFC East")).toBeLessThan(html.indexOf("American Football Conference"));
 });
+
+it("live football shows the down and field, and box scores tab by team", () => {
+  const live = {
+    ...sample.game,
+    game: { ...sample.game.game, state: "in", detail: "Q4 2:11" },
+    situation: {
+      possession: "21",
+      down_distance: "3rd & 7 at DAL 18",
+      short_down_distance: "3rd & 7",
+      yards_to_endzone: 18,
+      distance: 7,
+      red_zone: true,
+      drive: "8 plays, 57 yards, 4:01",
+      last_play: "J.Hurts pass short right to A.Brown for 5 yards.",
+    },
+  };
+  const html = render("/game/nfl/401772001", { ...sample, game: live });
+  expect(html).toContain("3rd &amp; 7");
+  expect(html).toContain("Red zone");
+  expect(html).toContain("8 plays, 57 yards");
+  expect(html).toMatch(/class="first-down" style="left:(11|11\.0+)%"/); // PHI (home) drives left: 18 - 7
+  expect(html).toContain('role="tablist"');
+  expect(html).toContain("Dallas Passing"); // DAL is a pinned team, so its tab opens first
+  expect(html).not.toContain("Philadelphia Passing");
+});

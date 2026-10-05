@@ -154,6 +154,17 @@ export interface Play {
   score: string;
 }
 
+export interface Situation {
+  possession: string; // team id with the ball
+  down_distance: string; // "3rd & 16 at MIN 42"
+  short_down_distance: string; // "3rd & 16"
+  yards_to_endzone: number | null; // for the team with the ball
+  distance: number | null; // yards to go for a first down
+  red_zone: boolean;
+  drive: string; // "6 plays, 48 yards, 3:12"
+  last_play: string;
+}
+
 export interface GameDetail {
   game: Game;
   team_stats: [label: string, away: string, home: string][];
@@ -164,6 +175,7 @@ export interface GameDetail {
   weather: string;
   win_prob: number[]; // home win %, 0-100, one per play
   officials: string[];
+  situation?: Situation | null; // live football games only
 }
 
 export interface LeagueInfo {
